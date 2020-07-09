@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       // 内部真实的内容
-      code: "",
+      code: '',
       // 默认的语法类型
       mode: "javascript",
       // 编辑器实例

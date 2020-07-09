@@ -15,6 +15,7 @@
 
 import CodeEditor from '@/components/CodeEditor'
 import Problem from '@/components/Problem'
+import * as Api from '@/api/User/program'
 
 export default {
   name: 'Program',
@@ -38,7 +39,10 @@ export default {
   },
   methods:{
     submit(value){
-      this.$message.success('代码：'+value)
+      console.log(value)
+      Api.submit({'code': value}).then(res => {
+        console.log(res)
+      })
     }
   }
 }
