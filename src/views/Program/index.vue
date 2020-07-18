@@ -26,13 +26,13 @@ export default {
   data(){
     return{
       problem:{
-        input_description:'【重要】第一行为数组的长度N（N>=1）  接下来N行，每行一个数，代表数组的N个元素',
-        output_description:'最大和的结果',
-        problem_description:'输入一个整形数组（可能有正数和负数），求数组中连续子数组（最少有一个元素）的最大和。要求时间复杂度为O(n)。',
+        input_description:'【重要】输入为一行，两个数字A和B，中间用空格隔开。',
+        output_description:'只有一个输出，输出A+B=？，记得换行。',
+        problem_description:'A+B的问题不仅使我们学习算数加法的入门问题，同时也是学习C语言编程的入门问题，在HelloWorld之后尝试一下让计算机也来运算一下A+B的问题吧。',
         example:{
-          input:"8 1 -2 3 10 -4 7 2 -5",
-          output:"18",
-          description:"最大子数组为 3, 10, -4, 7, 2"
+          input:"1 2",
+          output:"3",
+          description:"1+2=3 没有意见吧？"
         }
       }
     }
