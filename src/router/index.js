@@ -24,14 +24,23 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/program',
+    path: '/experiment',
+    name: 'Experiments',
     component: Layout,
+    redirect: '/coding',
+    meta: { title: 'Experiments', icon: 'el-icon-s-platform' },
     children: [
       {
         path: 'coding',
         name: 'Program',
-        component: () => import('../views/Program/index.vue'),
+        component: () => import(/* webpackChunkName: "Coding" */ '../views/Program/index.vue'),
         meta: { title: 'Coding', icon: 'el-icon-s-opportunity' }
+      },
+      {
+        path: 'create',
+        name: 'Create',
+        component: () => import(/* webpackChunkName: "CreateExperiment" */ '../views/CreateExperiment/index.vue'),
+        meta: { title: 'Create', icon: 'el-icon-upload2' }
       }
     ]
   }
