@@ -13,16 +13,15 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/',
-    name: 'Home',
-    component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue')
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: Layout,
+    children: [
+      {
+        path: 'about',
+        name: 'About',
+        component: () => import(/* webpackChunkName: "About" */ '../views/About.vue'),
+        meta: { title: 'About', icon: 'el-icon-document' }
+      }
+    ]
   },
   {
     path: '/program',
@@ -32,7 +31,7 @@ export const constantRoutes = [
         path: 'coding',
         name: 'Program',
         component: () => import('../views/Program/index.vue'),
-        meta: { title: 'Coding', icon: 'keyboard' }
+        meta: { title: 'Coding', icon: 'el-icon-s-opportunity' }
       }
     ]
   }
