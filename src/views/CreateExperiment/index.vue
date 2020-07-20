@@ -90,7 +90,6 @@
                 <el-checkbox label="C"></el-checkbox>
                 <el-checkbox label="C++"></el-checkbox>
                 <el-checkbox label="Java"></el-checkbox>
-                <el-checkbox label="Python2"></el-checkbox>
                 <el-checkbox label="Python3"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>

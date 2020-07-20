@@ -4,7 +4,7 @@
       <el-col :span="12">
         <div>
           <span>Languages</span>
-          <el-select v-model="selected_language" :value="language" @on-change="onLangChange" class="adjust">
+          <el-select v-model="selected_language" :value="language" v-on:change="onLangChange" class="adjust">
             <el-option v-for="item in languages" :key="item" :value="item">{{item}}</el-option>
           </el-select>
 
@@ -89,7 +89,7 @@
         },
         mode: {
           'C++': 'text/x-csrc',
-          'Python3': 'x-python'
+          'Python3': 'text/x-python'
         },
         themes: [
           {label: 'Monokai', value: 'monokai'},
@@ -105,7 +105,6 @@
         this.$emit('update:value', newCode)
       },
       onLangChange (newVal) {
-        console.log(newVal)
         this.editor.setOption('mode', this.mode[newVal])
         this.$emit('changeLang', newVal)
       },
@@ -135,7 +134,7 @@
 .header {
   margin: 5px 5px 15px 5px;
   .adjust {
-    width: 150px;
+    width: 140px;
     margin-left: 10px;
   }
   .fl-right {
