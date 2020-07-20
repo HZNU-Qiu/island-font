@@ -5,7 +5,10 @@
         <Problem :p="problem"></Problem>
       </el-col>
       <el-col :span="12">
-        <CodeEditor @submit="submit"></CodeEditor>
+        <!-- <CodeEditor @submit="submit"></CodeEditor> -->
+        <CodeMirror :value.sync="code"
+        @resetCode="onResetCode"
+        @changeLang="onLangChange"></CodeMirror>
       </el-col>
     </el-row>
   </div>
@@ -14,6 +17,7 @@
 <script>
 
 import CodeEditor from '@/components/CodeEditor'
+import CodeMirror from '@/components/CodeMirror'
 import Problem from '@/components/Problem'
 import * as Api from '@/api/User/program'
 
@@ -21,10 +25,13 @@ export default {
   name: 'Program',
   components:{
     CodeEditor,
-    Problem
+    Problem,
+    CodeMirror
   },
   data(){
     return{
+      code: '',
+      lang: '',
       problem:{
         input_description:'【重要】输入为一行，两个数字A和B，中间用空格隔开。',
         output_description:'只有一个输出，输出A+B=？，记得换行。',
@@ -39,10 +46,15 @@ export default {
   },
   methods:{
     submit(value){
-      console.log(value)
       Api.submit({'code': value}).then(res => {
         console.log(res)
       })
+    },
+    onResetCode() {
+      this.code = ''
+    },
+    onLangChange(lang) {
+      this.lang = lang
     }
   }
 }

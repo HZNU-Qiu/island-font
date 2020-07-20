@@ -55,10 +55,13 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="Difficulty" prop="difficulty">
-              <el-select placeholder="Low" value="1">
-                <el-option label="Low" value="1"></el-option>
-                <el-option label="Mid" value="2"></el-option>
-                <el-option label="High" value="3"></el-option>
+              <el-select placeholder="Low" v-model="difficulty" :label="options[difficulty - 1]">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -94,18 +97,18 @@
           </el-col>
         </el-row>
 
-        <el-form-item v-for="(sample, index) in [{input: '', output: ''}]" :key="'sample'+index">
+        <el-form-item v-for="(sample, index) in samples" :key="'sample'+index">
           <TestSamples :title="'Sample' + (index + 1)">
-            <el-button type="danger" size="small" icon="el-icon-delete" slot="header">Delete</el-button>
+            <el-button type="danger" size="small" icon="el-icon-delete" slot="header" @click="removeSample(index)">Delete</el-button>
             <el-row :gutter="20">
               <el-col :span="12">
                 <el-form-item label="Input_Samples" required>
-                  <el-input :rows="5" type="textarea" placeholder="Input_Samples"></el-input>
+                  <el-input :rows="5" v-model="samples[index].input" type="textarea" :placeholder="index == 0?'Input_Samples1 will be shown.Please remember to set mutiple samples':'Input_Samples'"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
                 <el-form-item label="Output_Samples" required>
-                  <el-input :rows="5" type="textarea" placeholder="Output_Samples"></el-input>
+                  <el-input :rows="5" v-model="samples[index].output" type="textarea" :placeholder="index == 0?'Output_Samples1 will be shown.Please remember to set mutiple samples':'Output_Samples'"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -118,6 +121,13 @@
             Add_Sample
           </button>
         </div>
+
+        <el-form-item label="Hint" prop="hint">
+          <Simditor></Simditor>
+        </el-form-item>
+
+        
+
       </el-form>
     </div>
   </div>
@@ -134,13 +144,24 @@ export default {
   },
   data() {
     return {
+      options: [{label: 'Low', value: 1}, {label: 'Mid', value: 2}, {label: 'High', value: 3}],
       display_id: '',
       title: '',
       time_limit: 1000,
       memory_limit: 32,
+      difficulty: 1,
       visible: 1,
       points: 100,
-      checkList: ['C', 'C++']
+      checkList: ['C', 'C++'],
+      samples: [{input: '', output: ''}]
+    }
+  },
+  methods: {
+    addSample() {
+      this.samples.push({input: '', output: ''})
+    },
+    removeSample(index) {
+      this.samples.splice(index, 1)
     }
   }
 
@@ -148,7 +169,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .panel {
   border: 1px solid #edecec;
   border-radius: 6px;

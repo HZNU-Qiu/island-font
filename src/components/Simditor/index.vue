@@ -12,7 +12,7 @@
     props: {
       toolbar: {
         type: Array,
-        default: () => ['title', 'bold', 'italic', 'underline', 'fontScale', 'color', 'ol', 'ul', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment', '|', 'markdown']
+        default: () => ['title', 'bold', 'italic', 'underline', 'fontScale', 'color', 'ol', 'ul', '|', 'link',  'hr', '|', 'indent', 'outdent', 'alignment', '|', 'markdown']
       },
       value: {
         type: String,
