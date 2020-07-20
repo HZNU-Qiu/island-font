@@ -27,7 +27,7 @@ export const constantRoutes = [
     path: '/experiment',
     name: 'Experiments',
     component: Layout,
-    redirect: '/coding',
+    redirect: '/experiment/coding',
     meta: { title: 'Experiments', icon: 'el-icon-s-platform' },
     children: [
       {

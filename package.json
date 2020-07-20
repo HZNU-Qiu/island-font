@@ -18,12 +18,10 @@
     "path-to-regexp": "^6.1.0",
     "prettier": "^2.0.5",
     "screenfull": "^5.0.2",
-    "simditor": "^2.3.28",
     "tar-simditor": "^3.0.5",
     "tar-simditor-markdown": "^1.2.3",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
-    "vue-simditor": "0.0.3",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

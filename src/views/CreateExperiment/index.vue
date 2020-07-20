@@ -7,13 +7,13 @@
       <el-form label-width="100px" label-position="top">
         <el-row :gutter="20">
           <el-col :span="6">
-            <el-form-item label="Display ID" prop="displayId">
-              <el-input placeholder="Display ID"></el-input>
+            <el-form-item label="Display ID" prop="display_id">
+              <el-input placeholder="Display ID" v-model="display_id" clearable></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="18">
             <el-form-item label="Title" prop="title">
-              <el-input placeholder="Title"></el-input>
+              <el-input placeholder="Title" v-model="title" clearable></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -93,6 +93,31 @@
             </el-form-item>
           </el-col>
         </el-row>
+
+        <el-form-item v-for="(sample, index) in [{input: '', output: ''}]" :key="'sample'+index">
+          <TestSamples :title="'Sample' + (index + 1)">
+            <el-button type="danger" size="small" icon="el-icon-delete" slot="header">Delete</el-button>
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-form-item label="Input_Samples" required>
+                  <el-input :rows="5" type="textarea" placeholder="Input_Samples"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="Output_Samples" required>
+                  <el-input :rows="5" type="textarea" placeholder="Output_Samples"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </TestSamples>
+        </el-form-item>
+
+        <div class="add-sample-btn">
+          <button type="button" class="add-samples" @click="addSample()">
+            <i class="el-icon-plus"></i>
+            Add_Sample
+          </button>
+        </div>
       </el-form>
     </div>
   </div>
@@ -100,13 +125,17 @@
 
 <script>
 import Simditor from '@/components/Simditor'
+import TestSamples from './components/TestSamples'
 export default {
   name: 'Create',
   components: {
     Simditor,
+    TestSamples
   },
   data() {
     return {
+      display_id: '',
+      title: '',
       time_limit: 1000,
       memory_limit: 32,
       visible: 1,
@@ -118,5 +147,34 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+
+.panel {
+  border: 1px solid #edecec;
+  border-radius: 6px;
+  margin: 10px;
+  padding: 30px;
+  box-shadow: 0px 0px 12px 1px #aaa;
+}
+
+.add-sample-btn {
+  margin: 10px 0 10px 0;
+}
+
+.add-samples {
+  width: 100%;
+  background-color: #fff;
+  border: 1px dashed #aaa;
+  outline: none;
+  cursor: pointer;
+  color: #666;
+  height: 35px;
+  font-size: 14px;
+  &:hover {
+    background-color: #f9fafc;
+  }
+  i {
+    margin-right: 10px;
+  }
+}
 </style>
