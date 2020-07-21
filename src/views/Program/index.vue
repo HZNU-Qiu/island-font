@@ -18,8 +18,11 @@
 
         <!-- <CodeEditor @submit="submit"></CodeEditor> -->
         <CodeMirror :value.sync="code" @resetCode="onResetCode" @changeLang="onLangChange"></CodeMirror>
-        <el-button type="primary" style="width: 150px; height: 50px" plain>Submit</el-button>
-        <el-tag class="result_tag" type="success"><i class="el-icon-circle-check"></i>Your code has been accepted!</el-tag>
+        <el-button type="primary" @click="submit()" style="width: 150px; height: 50px" plain>Submit</el-button>
+        <el-tag v-if="problem_status===0" class="result_tag" type="info"><i class="el-icon-coffee-cup"></i>Waiting to submit</el-tag>
+        <el-tag v-else-if="problem_status===1" class="result_tag" type="warning"><i class="el-icon-loading"></i>Pending! Good luck!</el-tag>
+        <el-tag v-else-if="problem_status===2" class="result_tag" type="success"><i class="el-icon-circle-check"></i>Your code has been accepted!Yeah~</el-tag>
+        <el-tag v-else class="result_tag" type="danger"><i class="el-icon-circle-close"></i>Oops, Wrong Answer.Just try again:)</el-tag>
       </el-col>
     </el-row>
   </div>
@@ -42,7 +45,7 @@ export default {
   data(){
     return{
       code: '',
-      lang: '',
+      lang: 'cpp',
       problem:{
         input_description:'【重要】输入为一行，两个数字A和B，中间用空格隔开。',
         output_description:'只有一个输出，输出A+B=？，记得换行。',
@@ -56,12 +59,15 @@ export default {
       time_limit: '1000',
       memory_limit: '32',
       points: 100,
-      ac_rate: 60.01
+      ac_rate: 60.01,
+      problem_status: 3,
+      tag_type: 'info',
+      tag_text: 'Waiting to submit'
     }
   },
   methods:{
-    submit(value){
-      Api.submit({'code': value}).then(res => {
+    submit(){
+      Api.submit({'code': this.code}).then(res => {
         console.log(res)
       })
     },

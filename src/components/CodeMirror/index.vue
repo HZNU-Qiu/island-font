@@ -5,7 +5,7 @@
         <div>
           <span>Languages</span>
           <el-select v-model="selected_language" :value="language" v-on:change="onLangChange" class="adjust">
-            <el-option v-for="item in languages" :key="item" :value="item">{{item}}</el-option>
+            <el-option v-for="item in languages" :label="item.name" :key="item.name" :value="item.value">{{item.name}}</el-option>
           </el-select>
 
           <el-tooltip
@@ -58,7 +58,7 @@
       languages: {
         type: Array,
         default: () => {
-          return ['C', 'C++', 'Java', 'Python3']
+          return [{name: 'C', value: 'c'}, {name: 'C++', value: 'cpp'}, {name: 'Java', value: 'java'}, {name: 'Python3', value: 'py3'}]
         }
       },
       language: {
@@ -88,8 +88,8 @@
           highlightSelectionMatches: {showToken: /\w/, annotateScrollbar: true}
         },
         mode: {
-          'C++': 'text/x-csrc',
-          'Python3': 'text/x-python'
+          'cpp': 'text/x-csrc',
+          'py3': 'text/x-python'
         },
         themes: [
           {label: 'Monokai', value: 'monokai'},
