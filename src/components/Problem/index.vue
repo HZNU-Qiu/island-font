@@ -59,6 +59,7 @@ pre {
   font-size: 0.9rem;
   line-height: 2rem;
   font-family: sans-serif;
+  height: 850px;
 }
 .example {
   border: 1px solid #e8edf2;

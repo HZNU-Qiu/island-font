@@ -125,7 +125,7 @@
           <Simditor></Simditor>
         </el-form-item>
 
-        
+        <el-button type="primary" size="medium" plain>Save</el-button>
 
       </el-form>
     </div>

@@ -5,10 +5,21 @@
         <Problem :p="problem"></Problem>
       </el-col>
       <el-col :span="12">
+        <el-table
+          :data="[{'time_limit': time_limit, 'memory_limit': memory_limit, 'points': points, 'ac_rate': ac_rate}]"
+          border
+          style="width: 100%;margin-top: 15px;"
+        >
+          <el-table-column prop="time_limit" label="Time Limit (MS)" width="180"></el-table-column>
+          <el-table-column prop="memory_limit" label="Memory Limit (MB)" width="180"></el-table-column>
+          <el-table-column prop="points" label="Points" width="180"></el-table-column>
+          <el-table-column prop="ac_rate" label="AC Rate (%)"></el-table-column>
+        </el-table>
+
         <!-- <CodeEditor @submit="submit"></CodeEditor> -->
-        <CodeMirror :value.sync="code"
-        @resetCode="onResetCode"
-        @changeLang="onLangChange"></CodeMirror>
+        <CodeMirror :value.sync="code" @resetCode="onResetCode" @changeLang="onLangChange"></CodeMirror>
+        <el-button type="primary" style="width: 150px; height: 50px" plain>Submit</el-button>
+        <el-tag class="result_tag" type="success"><i class="el-icon-circle-check"></i>Your code has been accepted!</el-tag>
       </el-col>
     </el-row>
   </div>
@@ -41,7 +52,11 @@ export default {
           output:"3",
           description:"1+2=3 没有意见吧？"
         }
-      }
+      },
+      time_limit: '1000',
+      memory_limit: '32',
+      points: 100,
+      ac_rate: 60.01
     }
   },
   methods:{
@@ -63,5 +78,13 @@ export default {
 <style scoped>
 .home {
   padding: 20px;
+}
+.result_tag {
+  float: right;
+  width: 70%;
+  height: 50px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
 }
 </style>
