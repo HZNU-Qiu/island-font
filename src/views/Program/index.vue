@@ -10,7 +10,7 @@
           border
           style="width: 100%;margin-top: 15px;"
         >
-          <el-table-column prop="time_limit" label="Time Limit (MS)" width="180"></el-table-column>
+          <el-table-column prop="time_limit" label="Time Limit (MS)" width="150"></el-table-column>
           <el-table-column prop="memory_limit" label="Memory Limit (MB)" width="180"></el-table-column>
           <el-table-column prop="points" label="Points" width="180"></el-table-column>
           <el-table-column prop="ac_rate" label="AC Rate (%)"></el-table-column>
@@ -22,7 +22,7 @@
         <el-tag v-if="problem_status===0" class="result_tag" type="info"><i class="el-icon-coffee-cup"></i>Waiting to submit</el-tag>
         <el-tag v-else-if="problem_status===1" class="result_tag" type="warning"><i class="el-icon-loading"></i>Pending! Good luck!</el-tag>
         <el-tag v-else-if="problem_status===2" class="result_tag" type="success"><i class="el-icon-circle-check"></i>Your code has been accepted!Yeah~</el-tag>
-        <el-tag v-else class="result_tag" type="danger"><i class="el-icon-circle-close"></i>Oops, Wrong Answer.Just try again:)</el-tag>
+        <el-tag v-else class="result_tag" type="danger"><i class="el-icon-circle-close"></i>{{this.tag_text}}.Just try again:)</el-tag>
       </el-col>
     </el-row>
   </div>
@@ -60,15 +60,17 @@ export default {
       memory_limit: '32',
       points: 100,
       ac_rate: 60.01,
-      problem_status: 3,
+      problem_status: 0,
       tag_type: 'info',
       tag_text: 'Waiting to submit'
     }
   },
   methods:{
     submit(){
+      this.problem_status = 1
       Api.submit({'code': this.code}).then(res => {
-        console.log(res)
+        this.problem_status = res.result === 0 ? 2 : res.result
+        this.tag_text = res.msg
       })
     },
     onResetCode() {
