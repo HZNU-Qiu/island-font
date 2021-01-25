@@ -23,10 +23,10 @@ module.exports = {
             errors: true
         },
         proxy: {
-            '/v1': {
+            '/web': {
                 ws: false,
                 // target: 'http://120.27.247.78:3000/ ',
-                target: 'http://127.0.0.1:3000/',
+                target: 'http://127.0.0.1:8020/',
                 changeOrigin: true
             }
         },

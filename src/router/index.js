@@ -12,16 +12,12 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
-    path: '/',
-    component: Layout,
-    children: [
-      {
-        path: 'about',
-        name: 'About',
-        component: () => import(/* webpackChunkName: "About" */ '../views/About.vue'),
-        meta: { title: 'About', icon: 'el-icon-document' }
-      }
-    ]
+    path: '/login',
+    component: () => import(/* webpackChunkName: "Login" */ '../views/Login/index.vue')
+  },
+  {
+    path: '/completeInfo',
+    component: () => import(/* webpackChunkName: "InfoComplete" */ '../views/InfoComplete/index.vue')
   },
   {
     path: '/experiment',
@@ -51,22 +47,64 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  // {
-  //   path: '/permission',
-  //   component: Layout,
-  //   redirect: '/permission/page',
-  //   alwaysShow: true, // will always show the root menu
-  //   name: 'Permission',
-  //   meta: {
-  //     title: 'Permission',
-  //     icon: 'lock',
-  //     roles: ['admin', 'editor'] // you can set roles in root nav
-  //   },
-  // }
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/dashboard',
+    name: 'system',
+    meta: {
+      title: '管理员',
+      roles: ['system']
+    },
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/system/Dashboard'),
+        name: 'systemDashboard',
+        meta: { roles: ['system'], title: '系统仪表盘' }
+      },
+    ]
+  },
+  {
+    path: '/student',
+    component: Layout,
+    redirect: '/student/home',
+    name: 'student',
+    meta: {
+      title: '学生',
+      roles: ['student']
+    },
+    children: [
+      {
+        path: 'home',
+        component: () => import('@/views/system/Dashboard'),
+        name: 'systemDashboard',
+        meta: { roles: ['system'], title: '系统仪表盘' }
+      },
+    ]
+  },
+  {
+    path: '/home',
+    component: Layout,
+    redirect: '/home/index',
+    name: 'home',
+    meta: {
+      title: '首页',
+      roles: ['student', 'teacher', 'system'],
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/HomePage/index'),
+        name: 'homepage',
+        meta: { roles: ['student', 'teacher', 'system'], title: '首页' }
+      }
+    ]
+  }
 ]
 
 const createRouter = () => new VueRouter({
-  mode: 'history', // require service support
+  mode: 'hash', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

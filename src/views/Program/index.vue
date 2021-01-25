@@ -33,7 +33,7 @@
 import CodeEditor from '@/components/CodeEditor'
 import CodeMirror from '@/components/CodeMirror'
 import Problem from '@/components/Problem'
-import * as Api from '@/api/User/program'
+import * as Api from '@/api/Student/program'
 
 export default {
   name: 'Program',
