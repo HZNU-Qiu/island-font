@@ -29,3 +29,28 @@ export function register(data) {
         data
     })
 }
+
+/**
+ * 通用上传图片并在线预览方法
+ */
+export function uploadAndPreview(data) {
+    return request({
+        url: '/common/upload',
+        method: 'post',
+        header: {
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        },
+        data
+    })
+}
+
+/**
+ * 通用清除缓存的图片,上传过图片但并未确定时触发
+ */
+export function cancelUpload(tmp) {
+    return request({
+        url: '/common/cancel',
+        method: 'post',
+        data: tmp
+    })
+}

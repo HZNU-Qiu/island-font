@@ -17,23 +17,26 @@ router.beforeEach(async (to, from, next) => {
   if (getToken()) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
-      next({ path: '/' })
+      next({ path: '/home/index' })
       NProgress.done() // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
     } else if (to.path === '/completeInfo') {
       next()
+    } else if (to.path === '/') {
+      next({ path: '/home/index' })
     } else {
-      console.log(store.getters.roles)
-      console.log(store.getters.roles.length)
-      console.log(store.getters.roles.length === 0)
       if (store.getters.roles.length === 0) {
         store.dispatch('GetInfo').then(response => { // 拉取用户信息
           const roles = response.roles;
           store.dispatch('generateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
             router.addRoutes(store.getters.addRouters); // 动态添加可访问路由表
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+          }).catch((err) => {
+            store.dispatch('FedLogOut').then(() => {
+              Message.error('验证失败,请重新登录');
+              next({ path: '/login' })
+            })
           })
         }).catch((err) => {
-          console.log(err)
           store.dispatch('FedLogOut').then(() => {
             Message.error('验证失败,请重新登录');
             next({ path: '/login' })

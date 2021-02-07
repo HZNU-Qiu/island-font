@@ -54,7 +54,6 @@ const user = {
     GetInfo({ commit }) {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
-          console.log(response)
           const data = response.data;
           let roles = ['anon'];
           if (data.type === 8) {

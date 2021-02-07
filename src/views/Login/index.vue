@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container1">
     <transition name="sign" mode="out-in">
       <el-form
         v-if="islogin"
@@ -203,7 +203,7 @@ export default {
   font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
 }
 
-.container {
+.container1 {
   width: 100vw;
   height: 100vh;
   display: flex;

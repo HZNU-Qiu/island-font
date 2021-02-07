@@ -20,7 +20,6 @@ function hasPermission(roles, route) {
  */
 export function filterAsyncRoutes(routes, roles) {
   const res = []
-
   routes.forEach(route => {
     const tmp = { ...route }
     if (hasPermission(roles, tmp)) {
@@ -63,12 +62,12 @@ export function filterAsyncRoutes(routes, roles) {
 
 const permission = {
   state: {
-    routers: constantRoutes,
+    routes: constantRoutes,
     addRoutes: []
   },
   mutations: {
     SET_ROUTES: (state, routes) => {
-      state.addRouters = routes
+      state.addRoutes = routes
       state.routes = constantRoutes.concat(routes)
     }
   },

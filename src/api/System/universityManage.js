@@ -47,6 +47,13 @@ export function getTree() {
   })
 }
 
+export function getTree2() {
+  return request({
+    url: 'university/getTree2',
+    method: 'get'
+  })
+}
+
 export function modifyUniversity(data) {
   return request({
     url: '/university/modify',
