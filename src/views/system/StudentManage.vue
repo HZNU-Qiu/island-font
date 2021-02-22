@@ -266,7 +266,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 * {
   font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
 }
@@ -299,20 +299,20 @@ export default {
   align-items: center;
 }
 
-.el-input-group__append {
+.search_input >>> .el-input-group__append {
   border-left: 0;
   border-radius: 0 20px 20px 0;
   background: #3465a2;
   color: #dae1ed;
 }
 
-.search_input > .el-input__inner {
+.search_input >>> .el-input__inner {
   width: 150px;
   border-radius: 20px 0 0 20px;
   transition: all 0.7s;
 }
 
-.search_input > .el-input__inner:focus {
+.search_input >>> .el-input__inner:focus {
   width: 300px;
   transition: all 0.7s;
 }

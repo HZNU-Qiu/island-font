@@ -23,9 +23,32 @@ export function modifyCourseDirection(data) {
   })
 }
 
-export function ListAllTags(id) {
+export function listAllTags(id) {
   return request({
     url: `/courseCategory/list/${id}`,
     method: 'get',
+  })
+}
+
+export function addTag(data) {
+  return request({
+    url: '/courseCategory/add',
+    method: 'post',
+    data
+  })
+}
+
+export function modiftTag(data) {
+  return request({
+    url: '/courseCategory/modify',
+    method: 'post',
+    data
+  })
+}
+
+export function getTree() {
+  return request({
+    url: '/courseDirection/getTree',
+    method: 'get'
   })
 }

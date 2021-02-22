@@ -79,6 +79,23 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/universityManage',
+    component: Layout,
+    redirect: '/universityManage/index',
+    name: 'UniversityManage',
+    meta: {
+      roles: ['system'],
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/system/UniversityManage'),
+        name: 'Manage',
+        meta: { roles: ['system'], title: 'UniversityManage', icon: 'el-icon-office-building' }
+      }
+    ]
+  },
+  {
     path: '/userManage',
     component: Layout,
     redirect: '/userManage/studentManage',
@@ -117,26 +134,61 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/courseManage',
+    name: 'CourseManage',
+    component: Layout,
+    redirect: '/courseManage/list',
+    meta: { roles: ['teacher'], title: 'CourseManage', icon: 'el-icon-s-grid' },
+    children: [
+      {
+        path: 'list',
+        name: 'CourseTable',
+        component: () => import(/* webpackChunkName: "CourseTable" */ '../views/teacher/CourseTable.vue'),
+        meta: { roles: ['teacher'], title: 'CourseTable', icon: 'el-icon-notebook-2' }
+      },
+      {
+        path: 'create',
+        name: 'Create',
+        component: () => import(/* webpackChunkName: "CreateCourse" */ '../views/teacher/CreateCourse.vue'),
+        meta: { roles: ['teacher'], title: 'CreateCourse', icon: 'el-icon-circle-plus-outline' }
+      }
+    ]
+  },
+  {
     path: '/experiment',
     name: 'Experiments',
     component: Layout,
     redirect: '/experiment/coding',
-    meta: { title: 'Experiments', icon: 'el-icon-s-platform' },
+    meta: { roles: ['teacher', 'student'], title: 'Experiments', icon: 'el-icon-s-platform' },
     children: [
       {
         path: 'coding',
         name: 'Program',
         component: () => import(/* webpackChunkName: "Coding" */ '../views/Program/index.vue'),
-        meta: { title: 'Coding', icon: 'el-icon-s-opportunity' }
+        meta: { roles: ['teacher', 'student'], title: 'Coding', icon: 'el-icon-s-opportunity' }
       },
       {
         path: 'create',
         name: 'Create',
         component: () => import(/* webpackChunkName: "CreateExperiment" */ '../views/CreateExperiment/index.vue'),
-        meta: { title: 'Create', icon: 'el-icon-upload2' }
+        meta: { roles: ['teacher'], title: 'Create', icon: 'el-icon-upload2' }
+      }
+    ]
+  },
+  {
+    path: '/courseDetail',
+    meta: { roles: ['teacher', 'student'] },
+    component: Layout,
+    redirect: '/courseDetail/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import(/* webpackChunkName: "CourseDetail" */ '../views/teacher/CourseDetail.vue'),
+        meta: { roles: ['teacher', 'student'] }
       }
     ]
   }
+
 ]
 
 const createRouter = () => new VueRouter({

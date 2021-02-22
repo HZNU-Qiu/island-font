@@ -183,7 +183,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 * {
   font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
 }

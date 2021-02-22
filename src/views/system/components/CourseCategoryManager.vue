@@ -8,19 +8,14 @@
     </div>
     <el-divider></el-divider>
     <div class="wrap">
-      <div class="tagBox">
-        <div class="iconBox">
-          <img
-            src="http://localhost:8020/icons/unknown.png"
-            alt="哦豁,图片莫得了"
-          />
-        </div>
-        <i class="el-icon-edit-outline"></i>
-        <div class="desc">
-          <p>JAVA</p>
-          <p>一门面向对象的语言</p>
-        </div>
-      </div>
+      <TagBox
+        v-for="(sample, index) in tags"
+        :key="index"
+        :id="sample.id"
+        :tagName="sample.name"
+        :icon="sample.icon"
+        @editThis="handleModify"
+      ></TagBox>
       <div class="addTag" @click="openCreateDialog">
         <i class="el-icon-plus"></i>
       </div>
@@ -41,7 +36,11 @@
             :show-file-list="false"
             :before-upload="beforeAvatarUpload"
           >
-            <img v-if="avatar" :src="avatar" class="avatar" />
+            <img
+              v-if="avatar"
+              :src="'http://localhost:8020' + avatar"
+              class="avatar"
+            />
             <div v-else class="avatar-uploader-icon">
               <i class="el-icon-plus"></i>
               <p>PNG或JPG格式</p>
@@ -52,13 +51,12 @@
         <el-form-item label="类别名称" prop="tagName">
           <el-input v-model="formData.tagName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="类别描述" prop="tagDesc">
-          <el-input v-model="formData.tagDesc" autocomplete="off"></el-input>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="handleCancel">取 消</el-button>
-        <el-button type="primary" @click="handleSubmit('addDir')"
+        <el-button
+          type="primary"
+          @click="isAdd ? handleAdd('addTag') : handleEdit('addTag')"
           >确 定</el-button
         >
       </div>
@@ -67,13 +65,17 @@
 </template>
 
 <script>
-import { ListAllTags } from "@/api/System/courseDirection";
+import { listAllTags, addTag, modiftTag } from "@/api/System/courseDirection";
 import { uploadAndPreview, cancelUpload } from "@/api/common";
+import TagBox from "@/components/TagBox";
 export default {
   name: "CourseCategoryManager",
   props: {
     direction: Number,
     name: String,
+  },
+  components: {
+    TagBox,
   },
   data() {
     return {
@@ -81,16 +83,19 @@ export default {
         tagName: [
           { required: true, message: "类别名称不能为空", trigger: "blur" },
         ],
-        tagDesc: [
-          { required: true, message: "类别描述不能为空", trigger: "blur" },
-        ],
       },
+      tags: [],
       isAdd: true,
       dialogFormVisible: false,
       formData: {
         tagName: "",
-        tagDesc: "",
+        direction: "",
         iconImage: "",
+      },
+      editData: {
+        id: "",
+        name: "",
+        icon: "",
       },
       avatar: "",
       hasUpload: false,
@@ -109,7 +114,68 @@ export default {
     handleAdd(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.FormData.iconImage = this.tmpImage;
+          this.formData.iconImage = this.tmpImage;
+          this.formData.direction = this.direction;
+          try {
+            let res = await addTag(this.formData);
+            this.tags.push(res.data);
+            this.$message({
+              type: "success",
+              message: "添加成功",
+            });
+          } catch (error) {
+            this.$message({
+              type: "danger",
+              message: "服务异常",
+            });
+          }
+          this.dialogFormVisible = false;
+          this.formData.iconImage = "";
+          this.formData.direction = "";
+          this.formData.tagName = "";
+          this.tmpImage = "";
+          this.hasUpload = false;
+          this.avatar = "";
+        }
+      });
+    },
+    handleModify(param) {
+      this.isAdd = false;
+      this.dialogFormVisible = true;
+      this.formData.tagName = param.tagName;
+      this.avatar = param.icon;
+      this.editData.id = param.id;
+      this.editData.name = this.formData.tagName;
+      this.editData.icon = param.icon;
+    },
+    handleEdit(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          try {
+            if (this.hasUpload) {
+              this.editData.icon = this.tmpImage;
+            }
+            await modiftTag(this.editData);
+            this.$message({
+              type: "success",
+              message: "编辑成功",
+            });
+          } catch (error) {
+            this.$message({
+              type: "danger",
+              message: "服务异常",
+            });
+          }
+          let res = await listAllTags(this.direction);
+          this.tags = res.data;
+          this.isAdd = false;
+          this.dialogFormVisible = false;
+          this.formData.iconImage = "";
+          this.formData.direction = "";
+          this.formData.tagName = "";
+          this.tmpImage = "";
+          this.hasUpload = false;
+          this.avatar = "";
         }
       });
     },
@@ -122,7 +188,7 @@ export default {
       try {
         let res = await uploadAndPreview(formData);
         this.hasUpload = true;
-        this.avatar = "http://localhost:8020" + res.data.src;
+        this.avatar = res.data.src;
         this.tmpImage = res.data.src;
       } catch (error) {
         this.$message({
@@ -153,7 +219,6 @@ export default {
       this.hasUpload = false;
       this.formData = {
         tagName: "",
-        tagDesc: "",
         iconImage: "",
       };
       this.avatar = "";
@@ -176,8 +241,8 @@ export default {
     },
   },
   async created() {
-    let res = await ListAllTags(this.direction);
-    console.log(res.data);
+    let res = await listAllTags(this.direction);
+    this.tags = res.data;
   },
 };
 </script>
@@ -205,89 +270,14 @@ export default {
 }
 
 .wrap {
-  padding: 30px 10px 20px 10px;
+  padding: 50px 10px 20px 10px;
   display: flex;
   flex-wrap: wrap;
 }
 
-.tagBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 160px;
-  height: 90px;
-  margin: 20px;
-  cursor: pointer;
-}
-
-.iconBox {
-  display: flex;
-  width: 100px;
-  height: 100px;
-  box-shadow: 18px 18px 30px rgba(0, 0, 0, 0.1),
-    -18px -18px 30px rgba(255, 255, 255, 1);
-  border-radius: 20px;
-  align-items: center;
-  justify-content: center;
-  background-color: #efeeee;
-  transition: box-shadow 0.2s ease-out;
-  position: relative;
-  padding: 32px 0;
-}
-
-.iconBox:hover {
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0.1), 0 0 0 rgba(255, 255, 255, 1),
-    inset 18px 18px 30px rgba(0, 0, 0, 0.1),
-    inset -18px -18px 30px rgba(255, 255, 255, 1);
-  transition: box-shadow 0.2s ease-out;
-}
-
-.iconBox:hover img {
-  width: 62px;
-  transition: width 0.2s ease-out;
-}
-
-.tagBox:hover .desc {
-  opacity: 1;
-  bottom: 15px;
-}
-
-.iconBox > img {
-  display: block;
-  height: 64px;
-  transition: width 0.2s ease-out;
-}
-
-.desc {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-  color: slategray;
-  font-weight: 400;
-  margin-top: 0;
-  position: relative;
-  bottom: 50px;
-  opacity: 0;
-  transition: bottom 0.3s ease, opacity 0.3s ease;
-}
-
-.el-icon-edit-outline {
-  color: #464646;
-  position: relative;
-  bottom: 95px;
-  left: 35px;
-}
-
-.desc > p {
-  margin: 0;
-}
-
 .addTag {
   position: relative;
-  bottom: 15px;
+  bottom: 2px;
   display: flex;
   width: 100px;
   height: 100px;
@@ -303,6 +293,7 @@ export default {
   color: #455a64;
   font-size: 32px;
   cursor: pointer;
+  margin-left: 20px;
 }
 
 .addTag:hover {

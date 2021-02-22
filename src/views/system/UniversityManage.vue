@@ -1,31 +1,33 @@
 <template>
-  <div class="container">
-    <h1>院校管理</h1>
-    <div class="header">
-      <el-input
-        class="search"
-        placeholder="输入关键字筛选"
-        v-model="filterText"
-      ></el-input>
-      <el-button
-        class="addUniversity"
-        type="success"
-        @click="handleAddUniversity"
-        icon="el-icon-office-building"
-        plain
-        >新增学校节点</el-button
+  <div>
+    <div>
+      <h1>院校管理</h1>
+      <div>
+        <el-input
+          class="search"
+          placeholder="输入关键字筛选"
+          v-model="filterText"
+        ></el-input>
+        <el-button
+          class="addUniversity"
+          type="success"
+          @click="handleAddUniversity"
+          icon="el-icon-office-building"
+          plain
+          >新增学校节点</el-button
+        >
+      </div>
+      <el-tree
+        class="filter-tree"
+        :filter-node-method="filterNode"
+        ref="tree"
+        :data="data"
+        node-key="id"
+        :expand-on-click-node="false"
+        :render-content="renderContent"
       >
+      </el-tree>
     </div>
-    <el-tree
-      class="filter-tree"
-      :filter-node-method="filterNode"
-      ref="tree"
-      :data="data"
-      node-key="id"
-      :expand-on-click-node="false"
-      :render-content="renderContent"
-    >
-    </el-tree>
   </div>
 </template>
 
@@ -454,12 +456,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 * {
   font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
 }
-
-.custom-tree-node {
+/*深拷贝*/
+.el-tree >>> .custom-tree-node {
   flex: 1;
   display: flex;
   align-items: center;
@@ -467,11 +469,11 @@ export default {
   font-size: 18px;
   padding-right: 8px;
 }
-.el-tree-node__content {
+.el-tree >>> .el-tree-node__content {
   height: 40px;
   margin-top: 8px;
 }
-.custom-tree-node {
+.el-tree >>> .custom-tree-node {
   padding: 4px 8px 4px 8px;
   border: 1px solid #b2bcc2;
   border-radius: 5px;
