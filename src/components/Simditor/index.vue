@@ -7,8 +7,9 @@ import Simditor from "tar-simditor";
 import "tar-simditor/styles/simditor.css";
 import "tar-simditor-markdown";
 import "tar-simditor-markdown/styles/simditor-markdown.css";
+// import "./simditor-file-upload"
 export default {
-  name: "Simditor",
+  name: "Editor",
   props: {
     toolbar: {
       type: Array,
@@ -18,19 +19,18 @@ export default {
         "italic",
         "underline",
         "fontScale",
-        "image",
         "color",
         "ol",
         "ul",
+        "markdown",
         "|",
+        "image",
         "link",
         "hr",
         "|",
         "indent",
         "outdent",
         "alignment",
-        "|",
-        "markdown",
       ],
     },
     value: {
@@ -48,6 +48,13 @@ export default {
     this.editor = new Simditor({
       textarea: this.$refs.editor,
       toolbar: this.toolbar,
+      upload: {
+        url: "/web/common/uploadCourseImg", //文件上传的接口地址
+        params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+        fileKey: "file", //服务器端获取文件数据的参数名
+        connectionCount: 3,
+        leaveConfirm: "正在上传文件",
+      },
       pasteImage: true,
       markdown: false,
       allowedStyles: {

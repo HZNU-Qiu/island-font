@@ -3,17 +3,18 @@
     <el-card class="ChapterCard" shadow="always">
       <div class="cardHeader">
         <h3 class="chapterName">
-          {{ chapterName }} <i class="el-icon-edit"></i>
+          {{ chapterName }}
+          <i class="el-icon-edit" @click="changeChapterName"></i>
         </h3>
-        <p class="desc">{{ remark }}<i class="el-icon-edit"></i></p>
+        <p class="desc">{{ remark }}</p>
       </div>
       <!--  -->
-      <div class="item" v-for="(sample, index) in children" :key="index">
+      <div @click="toContent(sample.id, sample.name)" class="item" v-for="(sample, index) in children" :key="index">
         <i class="el-icon-document">
           {{ chapterIndex + "-" + (index + 1) + sample.name }}</i
         >
         <div>
-          <i class="el-icon-edit"></i>
+          <i class="el-icon-edit" @click="changeCourseName(sample)"></i>
           <i class="el-icon-close"></i>
         </div>
       </div>
@@ -47,10 +48,11 @@
 </template>
 
 <script>
-import { addChapterCourse } from "@/api/Teacher/chapterManage";
+import { addChapterCourse, changeName } from "@/api/Teacher/chapterManage";
 export default {
   name: "ChapterAdditionCard",
   props: {
+    selfId: Number,
     chapterName: String,
     remark: String,
     courseId: Number,
@@ -93,6 +95,73 @@ export default {
             });
           }
         }
+      });
+    },
+    changeChapterName() {
+      this.$prompt("正在更改章节名称", "更改", {
+        confirmButtonText: "保存",
+        cancelButtonText: "取消",
+      })
+        .then(({ value }) => {
+          changeName({ id: this.selfId, name: value })
+            .then(() => {
+              this.chapterName = value;
+              this.$message({
+                type: "success",
+                message: "更改完成",
+              });
+            })
+            .catch(() => {
+              this.$message({
+                type: "warning",
+                message: "操作失败",
+              });
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消操作",
+          });
+        });
+    },
+    changeCourseName(sample) {
+      this.$prompt("正在更改课程名称", "更改", {
+        confirmButtonText: "保存",
+        cancelButtonText: "取消",
+      })
+        .then(({ value }) => {
+          changeName({ id: sample.id, name: value })
+            .then(() => {
+              sample.name = value;
+              this.$message({
+                type: "success",
+                message: "更改完成",
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+              this.$message({
+                type: "warning",
+                message: "操作失败",
+              });
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消操作",
+          });
+        });
+    },
+    toContent(id, title) {
+      this.$router.push({
+        path: "/courseContentViewer",
+        query: {
+          id: id,
+          courseId: this.courseId,
+          title: title
+        },
       });
     },
   },

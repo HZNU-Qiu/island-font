@@ -19,15 +19,15 @@
         </el-row>
 
         <el-form-item label="Description" prop="description">
-          <Simditor></Simditor>
+          <Editor></Editor>
         </el-form-item>
 
         <el-form-item label="Input Description" prop="input_description">
-          <Simditor></Simditor>
+          <Editor></Editor>
         </el-form-item>
 
         <el-form-item label="Output Description" prop="output_description">
-          <Simditor></Simditor>
+          <Editor></Editor>
         </el-form-item>
 
         <el-row :gutter="20">
@@ -122,7 +122,7 @@
         </div>
 
         <el-form-item label="Hint" prop="hint">
-          <Simditor></Simditor>
+          <Editor></Editor>
         </el-form-item>
 
         <el-button type="primary" size="medium" plain>Save</el-button>
@@ -133,12 +133,12 @@
 </template>
 
 <script>
-import Simditor from '@/components/Simditor'
+import Editor from '@/components/Simditor'
 import TestSamples from './components/TestSamples'
 export default {
   name: 'Create',
   components: {
-    Simditor,
+    Editor,
     TestSamples
   },
   data() {

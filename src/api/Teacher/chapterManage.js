@@ -22,3 +22,11 @@ export function addChapterCourse(data) {
     data
   })
 }
+
+export function changeName(data) {
+  return request({
+    url: '/chapter/changeName',
+    method: 'post',
+    data
+  })
+}

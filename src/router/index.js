@@ -177,14 +177,40 @@ export const asyncRoutes = [
   },
   {
     path: '/courseDetail',
-    meta: { roles: ['teacher', 'student'] },
+    meta: { roles: ['teacher'] },
     component: Layout,
     redirect: '/courseDetail/index',
     children: [
       {
         path: 'index',
         component: () => import(/* webpackChunkName: "CourseDetail" */ '../views/teacher/CourseDetail.vue'),
-        meta: { roles: ['teacher', 'student'] }
+        meta: { roles: ['teacher'] }
+      }
+    ]
+  },
+  {
+    path: '/courseContentEditor',
+    meta: { roles: ['teacher'] },
+    component: Layout,
+    redirect: '/courseContentEditor/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import(/* webpackChunkName: "CourseContent" */ '../views/teacher/CourseContentEditor.vue'),
+        meta: { roles: ['teacher'] }
+      }
+    ]
+  },
+  {
+    path: '/courseContentViewer',
+    meta: { roles: ['teacher'] },
+    component: Layout,
+    redirect: '/courseContentViewer/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import(/* webpackChunkName: "CourseContentViewer" */ '../views/teacher/CourseContentViewer.vue'),
+        meta: { roles: ['teacher'] }
       }
     ]
   }

@@ -19,6 +19,7 @@
             <ChapterAdditionCard
               v-for="(sample, index) in chapters"
               :key="index"
+              :selfId="sample.id"
               :chapterName="sample.name"
               :remark="sample.remark"
               :courseId="details.id"
