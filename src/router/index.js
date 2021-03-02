@@ -148,7 +148,7 @@ export const asyncRoutes = [
       },
       {
         path: 'create',
-        name: 'Create',
+        name: 'CreateCourse',
         component: () => import(/* webpackChunkName: "CreateCourse" */ '../views/teacher/CreateCourse.vue'),
         meta: { roles: ['teacher'], title: 'CreateCourse', icon: 'el-icon-circle-plus-outline' }
       }
@@ -169,9 +169,30 @@ export const asyncRoutes = [
       },
       {
         path: 'create',
-        name: 'Create',
+        name: 'CreateExperiment',
         component: () => import(/* webpackChunkName: "CreateExperiment" */ '../views/CreateExperiment/index.vue'),
         meta: { roles: ['teacher'], title: 'Create', icon: 'el-icon-upload2' }
+      }
+    ]
+  },
+  {
+    path: '/exerciseManage',
+    name: 'ExerciseManage',
+    component: Layout,
+    redirect: '/exerciseManage/index',
+    meta: { roles: ['teacher'], title: 'ExerciseManage', icon: 'el-icon-s-order' },
+    children: [
+      {
+        path: 'index',
+        name: 'Exercises',
+        component: () => import(/* webpackChunkName: "ExercisesManage" */ '../views/teacher/ExerciseManage.vue'),
+        meta: { roles: ['teacher'], title: 'Exercises', icon: 'el-icon-s-order' }
+      },
+      {
+        path: 'exerciseEdition',
+        hidden: true,
+        component: () => import(/* webpackChunkName: "ExerciseEdition"*/ '../views/teacher/ExerciseEdition.vue'),
+        meta: { roles: ['teacher'] }
       }
     ]
   },
@@ -179,6 +200,7 @@ export const asyncRoutes = [
     path: '/courseDetail',
     meta: { roles: ['teacher'] },
     component: Layout,
+    hidden: true,
     redirect: '/courseDetail/index',
     children: [
       {
@@ -192,6 +214,7 @@ export const asyncRoutes = [
     path: '/courseContentEditor',
     meta: { roles: ['teacher'] },
     component: Layout,
+    hidden: true,
     redirect: '/courseContentEditor/index',
     children: [
       {
@@ -205,6 +228,7 @@ export const asyncRoutes = [
     path: '/courseContentViewer',
     meta: { roles: ['teacher'] },
     component: Layout,
+    hidden: true,
     redirect: '/courseContentViewer/index',
     children: [
       {
@@ -213,7 +237,7 @@ export const asyncRoutes = [
         meta: { roles: ['teacher'] }
       }
     ]
-  }
+  },
 
 ]
 
