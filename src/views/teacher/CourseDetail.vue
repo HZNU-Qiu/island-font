@@ -3,7 +3,7 @@
     <div class="panel">
       <div class="header">
         <div class="header-left">
-          <p>JAVA函数式编程</p>
+          <p>{{details.name}}</p>
         </div>
       </div>
       <div class="main">

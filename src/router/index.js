@@ -163,15 +163,27 @@ export const asyncRoutes = [
     children: [
       {
         path: 'coding',
-        name: 'Program',
+        hidden: true,
         component: () => import(/* webpackChunkName: "Coding" */ '../views/Program/index.vue'),
-        meta: { roles: ['teacher', 'student'], title: 'Coding', icon: 'el-icon-s-opportunity' }
+        meta: { roles: ['teacher', 'student'] }
       },
       {
         path: 'create',
-        name: 'CreateExperiment',
+        hidden: true,
         component: () => import(/* webpackChunkName: "CreateExperiment" */ '../views/CreateExperiment/index.vue'),
-        meta: { roles: ['teacher'], title: 'Create', icon: 'el-icon-upload2' }
+        meta: { roles: ['teacher'] }
+      },
+      {
+        path: 'list',
+        name: 'ExperimentManage',
+        component: () => import(/* webpackChunkName: "ExperimentManage"*/ '../views/teacher/ExperimentList.vue'),
+        meta: { roles: ['teacher', 'student'], title: '题库管理', icon: 'el-icon-s-order' }
+      },
+      {
+        path: 'all',
+        name: 'ExperimentList',
+        component: () => import(/* webpackChunkName: "ExperimentList"*/ '../views/Experiments/index'),
+        meta: { roles: ['teacher', 'student'], title: '实验列表', icon: 'el-icon-tickets' }
       }
     ]
   },

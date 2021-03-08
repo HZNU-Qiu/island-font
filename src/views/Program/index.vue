@@ -1,92 +1,218 @@
 <template>
   <div class="home">
     <el-row :gutter="20">
-      <el-col :span="12">
+      <el-col
+        style="dispaly: flex; flex-direction: column; justify-content: center"
+        :span="18"
+      >
         <Problem :p="problem"></Problem>
-      </el-col>
-      <el-col :span="12">
-        <el-table
-          :data="[{'time_limit': time_limit, 'memory_limit': memory_limit, 'points': points, 'ac_rate': ac_rate}]"
-          border
-          style="width: 100%;margin-top: 15px;"
-        >
-          <el-table-column prop="time_limit" label="Time Limit (MS)" width="150"></el-table-column>
-          <el-table-column prop="memory_limit" label="Memory Limit (MB)" width="180"></el-table-column>
-          <el-table-column prop="points" label="Points" width="180"></el-table-column>
-          <el-table-column prop="ac_rate" label="AC Rate (%)"></el-table-column>
-        </el-table>
 
-        <!-- <CodeEditor @submit="submit"></CodeEditor> -->
-        <CodeMirror :value.sync="code" @resetCode="onResetCode" @changeLang="onLangChange"></CodeMirror>
-        <el-button type="primary" @click="submit()" style="width: 150px; height: 50px" plain>Submit</el-button>
-        <el-tag v-if="problem_status===0" class="result_tag" type="info"><i class="el-icon-coffee-cup"></i>Waiting to submit</el-tag>
-        <el-tag v-else-if="problem_status===1" class="result_tag" type="warning"><i class="el-icon-loading"></i>Pending! Good luck!</el-tag>
-        <el-tag v-else-if="problem_status===2" class="result_tag" type="success"><i class="el-icon-circle-check"></i>Your code has been accepted!Yeah~</el-tag>
-        <el-tag v-else class="result_tag" type="danger"><i class="el-icon-circle-close"></i>{{this.tag_text}}.Just try again:)</el-tag>
+        <div class="editorBox">
+          <CodeMirror
+            :value.sync="code"
+            :languages="accessLang"
+            @resetCode="onResetCode"
+            @changeLang="onLangChange"
+          ></CodeMirror>
+          <el-button
+            type="primary"
+            @click="submit()"
+            style="width: 150px; height: 50px"
+            plain
+            >Submit</el-button
+          >
+          <el-tag v-if="problem_status === 0" class="result_tag" type="info"
+            ><i class="el-icon-coffee-cup"></i>Waiting to submit</el-tag
+          >
+          <el-tag
+            v-else-if="problem_status === 1"
+            class="result_tag"
+            type="warning"
+            ><i class="el-icon-loading"></i>Pending! Good luck!</el-tag
+          >
+          <el-tag
+            v-else-if="problem_status === 2"
+            class="result_tag"
+            type="success"
+            ><i class="el-icon-circle-check"></i>Your code has been
+            accepted!Yeah~</el-tag
+          >
+          <el-tag v-else class="result_tag" type="danger"
+            ><i class="el-icon-circle-close"></i>{{ this.tag_text }}.Just try
+            again:)</el-tag
+          >
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <el-card style="margin: 10px 0;cursor:pointer" shadow="hover">
+          <i class="el-icon-more"><span style="margin-left: 20px">提交队列</span></i>
+        </el-card>
+        <el-card shadow="hover">
+          <div class="cardHeader">
+            <i class="el-icon-info"></i>
+            <span>题目信息</span>
+          </div>
+          <div class="cardBody">
+            <div class="cardItem">
+              <div>ID</div>
+              <div>{{ displayId }}</div>
+            </div>
+            <div class="cardItem">
+              <div>名称</div>
+              <div>{{ title }}</div>
+            </div>
+            <div class="cardItem">
+              <div>时间限制</div>
+              <div>{{ maxCpuTime + "MS" }}</div>
+            </div>
+            <div class="cardItem">
+              <div>内存限制</div>
+              <div>{{ maxMemory + "MB" }}</div>
+            </div>
+            <div class="cardItem">
+              <div>难度</div>
+              <div>{{ difficultyLabel }}</div>
+            </div>
+            <div class="cardItem">
+              <div>分值</div>
+              <div>{{ point }}</div>
+            </div>
+          </div>
+        </el-card>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-
-import CodeEditor from '@/components/CodeEditor'
-import CodeMirror from '@/components/CodeMirror'
-import Problem from '@/components/Problem'
-import * as Api from '@/api/Student/program'
+import CodeEditor from "@/components/CodeEditor";
+import CodeMirror from "@/components/CodeMirror";
+import Problem from "@/components/Problem";
+import { getDetail,judge } from "@/api/experiments";
 
 export default {
-  name: 'Program',
-  components:{
+  name: "Program",
+  components: {
     CodeEditor,
     Problem,
-    CodeMirror
+    CodeMirror,
   },
-  data(){
-    return{
-      code: '',
-      lang: 'cpp',
-      problem:{
-        input_description:'【重要】输入为一行，两个数字A和B，中间用空格隔开。',
-        output_description:'只有一个输出，输出A+B=？，记得换行。',
-        problem_description:'A+B的问题不仅使我们学习算数加法的入门问题，同时也是学习C语言编程的入门问题，在HelloWorld之后尝试一下让计算机也来运算一下A+B的问题吧。',
-        example:{
-          input:"1 2",
-          output:"3",
-          description:"1+2=3 没有意见吧？"
-        }
+  data() {
+    return {
+      id: 0,
+      title: "",
+      displayId: 0,
+      code: "",
+      lang: "cpp",
+      accessLang: [],
+      problem: {
+        inputDesc: "",
+        outputDesc: "",
+        content: "",
+        inputSample: "",
+        outputSample: "",
+        hint: "",
       },
-      time_limit: '1000',
-      memory_limit: '32',
-      points: 100,
-      ac_rate: 60.01,
+      maxCpuTime: 1000,
+      maxMemory: 32,
+      difficulty: 1,
+      point: 100,
+      ac_rate: 0,
       problem_status: 0,
-      tag_type: 'info',
-      tag_text: 'Waiting to submit'
+      tag_type: "info",
+      tag_text: "Waiting to submit",
+    };
+  },
+  computed: {
+    difficultyLabel: function() {
+      switch(this.difficulty) {
+        case 1:
+          return "简单"
+        case 2:
+          return "中等"
+        case 3:
+          return "困难"
+      }
     }
   },
-  methods:{
-    submit(){
-      this.problem_status = 1
-      Api.submit({'code': this.code}).then(res => {
-        this.problem_status = res.result === 0 ? 2 : res.result
-        this.tag_text = res.msg
-      })
+  methods: {
+    async submit() {
+      this.problem_status = 1;
+      console.log(this.lang);
+      let data = {};
+      data.lang = this.lang;
+      data.code = this.code;
+      data.experimentId = this.id;
+      data.displayId = this.displayId;
+      data.max_cpu_time = this.maxCpuTime;
+      data.max_memory = this.maxMemory;
+      data.codeSize = this.code.length;
+      data.point = this.point;
+      await judge(data);
     },
     onResetCode() {
-      this.code = ''
+      this.code = "";
     },
     onLangChange(lang) {
-      this.lang = lang
-    }
-  }
-}
+      this.lang = lang;
+    },
+  },
+  async created() {
+    this.id = this.$route.query.id;
+    let res = await getDetail(this.id);
+    let data = res.data.data;
+    this.title = data.title;
+    this.problem.inputDesc = data.inputDesc;
+    this.problem.outputDesc = data.outputDesc;
+    this.problem.content = data.content;
+    this.problem.inputSample = data.inputSample;
+    this.problem.outputSample = data.outputSample;
+    this.problem.hint = data.hint;
+    this.maxCpuTime = data.maxCpuTime;
+    this.maxMemory = data.maxMemory;
+    this.point = data.point;
+    this.displayId = data.displayId;
+    this.difficulty = data.difficulty;
+    let langs = [];
+    langs = res.data.checkList;
+    langs.map((item) => {
+      let x = {name: "", value: ""}
+      switch(item) {
+        case "C":
+          x.name = "C";
+          x.value = "c";
+          this.accessLang.push(x);
+          break;
+        case "C++":
+          x.name = "C++";
+          x.value = "cpp";
+          this.accessLang.push(x);
+          break;
+        case "Java":
+          x.name = "Java";
+          x.value = "java";
+          this.accessLang.push(x);
+          break;
+        case "Python3":
+          x.name = "Python3";
+          x.value = "py3";
+          this.accessLang.push(x);
+          break;
+      }
+    })
+  },
+};
 </script>
 
 <style scoped>
+* {
+  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
+}
+
 .home {
   padding: 20px;
 }
+
 .result_tag {
   float: right;
   width: 70%;
@@ -94,5 +220,27 @@ export default {
   font-size: 16px;
   display: flex;
   align-items: center;
+}
+
+.editorBox {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.cardHeader {
+  font-size: 18px;
+  font-weight: 500;
+  color: #3465a2;
+}
+
+.cardItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 2px dotted #dcdfe6;
+  color: #214066;
 }
 </style>

@@ -88,8 +88,10 @@
           highlightSelectionMatches: {showToken: /\w/, annotateScrollbar: true}
         },
         mode: {
+          'c': 'text/x-csrc',
           'cpp': 'text/x-csrc',
-          'py3': 'text/x-python'
+          'java': 'text/x-java',
+          'py3': 'text/x-python',
         },
         themes: [
           {label: 'Monokai', value: 'monokai'},

@@ -9,12 +9,32 @@
         <p class="desc">{{ remark }}</p>
       </div>
       <!--  -->
-      <div @click="toContent(sample.id, sample.name)" class="item" v-for="(sample, index) in children" :key="index">
+      <div
+        @click="toContent(sample.id, sample.name)"
+        class="item"
+        v-for="(sample, index) in children"
+        :key="index"
+      >
         <i class="el-icon-document">
           {{ chapterIndex + "-" + (index + 1) + sample.name }}</i
         >
-        <div>
-          <i class="el-icon-edit" @click="changeCourseName(sample)"></i>
+        <div class="optionsBox">
+          <el-tooltip
+            effect="dark"
+            content="修改名称"
+            placement="top"
+          >
+            <i class="el-icon-edit" @click.stop="changeCourseName(sample)"></i>
+          </el-tooltip>
+
+          <el-tooltip
+            effect="dark"
+            content="添加作业"
+            placement="top"
+          >
+            <i class="el-icon-document-add" @click.stop="changeCourseName(sample)"></i>
+          </el-tooltip>
+
           <i class="el-icon-close"></i>
         </div>
       </div>
@@ -160,7 +180,7 @@ export default {
         query: {
           id: id,
           courseId: this.courseId,
-          title: title
+          title: title,
         },
       });
     },
@@ -181,6 +201,13 @@ export default {
   align-items: center;
 }
 
+.optionsBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .item:hover {
   cursor: pointer;
   background: rgba(12, 35, 138, 0.05);
@@ -196,16 +223,24 @@ export default {
   opacity: 1;
 }
 
+.item:hover > div > .el-icon-document-add {
+  opacity: 1;
+  cursor: pointer;
+}
+
 .el-icon-edit {
   opacity: 0;
+  margin-right: 15px;
 }
 
 .el-icon-edit:hover {
   cursor: pointer;
 }
 
-.el-icon-edit {
+
+.el-icon-document-add {
   opacity: 0;
+  margin-right: 10px;
 }
 
 .el-icon-close {

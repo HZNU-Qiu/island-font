@@ -138,7 +138,7 @@ export default {
   align-items: center;
   position: fixed;
   top: 200px;
-  left: 1140px;
+  left: 83%;
 }
 
 .options > .btn {
