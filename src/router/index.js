@@ -168,6 +168,12 @@ export const asyncRoutes = [
         meta: { roles: ['teacher', 'student'] }
       },
       {
+        path: 'submited',
+        hidden: true,
+        component: () => import(/* webpackChunkName: "SubmitQueue" */ '../views/SubmitQueue/index.vue'),
+        meta: { roles: ['teacher', 'student'] }
+      },
+      {
         path: 'create',
         hidden: true,
         component: () => import(/* webpackChunkName: "CreateExperiment" */ '../views/CreateExperiment/index.vue'),

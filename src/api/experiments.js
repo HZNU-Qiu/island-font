@@ -83,3 +83,14 @@ export function judge(data) {
     data
   })
 }
+
+/**
+ * 获取提交队列 30个/页
+ */
+export function queryQueue(data) {
+  return request({
+    url: '/experiment/queryQueue',
+    method: 'post',
+    data
+  })
+}

@@ -1,5 +1,6 @@
 <template>
   <el-card class="box-card">
+    <el-button @click="handleReturn" style="margin: 0 0 15px 5px" plain icon="el-icon-arrow-left">返回列表</el-button>
     <div class="problem-description">
       <b>题目描述:</b>
       <br />
@@ -39,6 +40,13 @@ export default {
       default: () => {},
     },
   },
+  methods: {
+    handleReturn() {
+      this.$router.push({
+        path: '/experiment/all'
+      })      
+    }
+  }
 };
 </script>
 
@@ -77,7 +85,7 @@ div {
   font-size: 0.9rem;
   line-height: 2rem;
   font-family: sans-serif;
-  padding: 30px 0;
+  padding: 10px 0 30px 0;
 }
 .example {
   border: 1px solid #e8edf2;

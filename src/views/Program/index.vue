@@ -21,21 +21,28 @@
             plain
             >Submit</el-button
           >
-          <el-tag v-if="problem_status === 0" class="result_tag" type="info"
+          <el-tag v-if="problem_status === -2" class="result_tag" type="info"
             ><i class="el-icon-coffee-cup"></i>Waiting to submit</el-tag
           >
           <el-tag
-            v-else-if="problem_status === 1"
+            v-else-if="problem_status === -4"
             class="result_tag"
             type="warning"
             ><i class="el-icon-loading"></i>Pending! Good luck!</el-tag
           >
           <el-tag
-            v-else-if="problem_status === 2"
+            v-else-if="problem_status === 0"
             class="result_tag"
             type="success"
             ><i class="el-icon-circle-check"></i>Your code has been
             accepted!Yeah~</el-tag
+          >
+          <el-tag
+            v-else-if="problem_status === -3"
+            class="result_tag"
+            type="warning"
+            ><i class="el-icon-circle-close"></i>Seriously?
+            {{ tag_text }}</el-tag
           >
           <el-tag v-else class="result_tag" type="danger"
             ><i class="el-icon-circle-close"></i>{{ this.tag_text }}.Just try
@@ -44,10 +51,15 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <el-card style="margin: 10px 0;cursor:pointer" shadow="hover">
-          <i class="el-icon-more"><span style="margin-left: 20px">提交队列</span></i>
+        <el-card
+          style="margin: 10px 0; cursor: pointer"
+          shadow="hover"
+        >
+          <i class="el-icon-more"
+            ><span @click.prevent.stop="toSubmitQueue" style="margin-left: 20px">提交队列</span></i
+          >
         </el-card>
-        <el-card shadow="hover">
+        <el-card style="margin-top: 20px" shadow="hover">
           <div class="cardHeader">
             <i class="el-icon-info"></i>
             <span>题目信息</span>
@@ -79,16 +91,69 @@
             </div>
           </div>
         </el-card>
+        <!--  -->
+        <el-card
+          style="margin-top: 30px"
+          v-show="compileSuccess === 1"
+          shadow="hover"
+        >
+          <div class="cardHeader">
+            <i class="el-icon-info"></i>
+            <span>提交详情</span>
+          </div>
+          <div class="cardBody">
+            <div class="cardItem">
+              <div>代码大小</div>
+              <div>{{ resultFeedback.codeLength }} Byte</div>
+            </div>
+            <div class="cardItem">
+              <div>平均用时</div>
+              <div>{{ resultFeedback.avgTime }} MS</div>
+            </div>
+            <div class="cardItem">
+              <div>内存占用</div>
+              <div>{{ resultFeedback.avgMemory / 1024 }} KB</div>
+            </div>
+            <div class="cardItem">
+              <div>提交总数</div>
+              <div>{{ resultFeedback.submitedNum }}</div>
+            </div>
+            <div class="pieChart">
+              <PieChart
+                :chartData="chartData"
+                :options="chartOptions"
+              ></PieChart>
+            </div>
+          </div>
+        </el-card>
+        <!--  -->
+        <el-card
+          style="margin-top: 30px"
+          v-show="compileSuccess === -1"
+          shadow="hover"
+        >
+          <div class="cardHeader">
+            <i class="el-icon-info"></i>
+            <span>错误详情</span>
+          </div>
+          <div class="cardBody">
+            <div class="reason">
+              <h3>Error</h3>
+              <div>{{ failedReason }}</div>
+            </div>
+          </div>
+        </el-card>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import PieChart from "@/components/Charts/ExperimentFeedBackChart/index.js";
 import CodeEditor from "@/components/CodeEditor";
 import CodeMirror from "@/components/CodeMirror";
 import Problem from "@/components/Problem";
-import { getDetail,judge } from "@/api/experiments";
+import { getDetail, judge } from "@/api/experiments";
 
 export default {
   name: "Program",
@@ -96,6 +161,7 @@ export default {
     CodeEditor,
     Problem,
     CodeMirror,
+    PieChart,
   },
   data() {
     return {
@@ -118,27 +184,39 @@ export default {
       difficulty: 1,
       point: 100,
       ac_rate: 0,
-      problem_status: 0,
+      problem_status: -2,
       tag_type: "info",
       tag_text: "Waiting to submit",
+      resultFeedback: {
+        codeLength: 0,
+        avgTime: 0,
+        avgMemory: 0,
+        submitedNum: 0,
+      },
+      compileSuccess: 0,
+      failedReason: "",
+      chartData: null,
+      chartOptions: {
+        hoverBorderWidth: 20,
+        responsive: true,
+      },
     };
   },
   computed: {
-    difficultyLabel: function() {
-      switch(this.difficulty) {
+    difficultyLabel: function () {
+      switch (this.difficulty) {
         case 1:
-          return "简单"
+          return "简单";
         case 2:
-          return "中等"
+          return "中等";
         case 3:
-          return "困难"
+          return "困难";
       }
-    }
+    },
   },
   methods: {
     async submit() {
-      this.problem_status = 1;
-      console.log(this.lang);
+      this.problem_status = -4;
       let data = {};
       data.lang = this.lang;
       data.code = this.code;
@@ -148,7 +226,31 @@ export default {
       data.max_memory = this.maxMemory;
       data.codeSize = this.code.length;
       data.point = this.point;
-      await judge(data);
+      let res = await judge(data);
+      let feedBack = res.data;
+      if (feedBack.flag === -1) {
+        this.problem_status = -3;
+        this.tag_text = feedBack.msg;
+        this.failedReason = feedBack.reason;
+        this.compileSuccess = -1;
+      } else {
+        this.problem_status = feedBack.result;
+        this.tag_text = feedBack.msg;
+        this.resultFeedback.codeLength = this.code.length;
+        this.resultFeedback.avgTime = feedBack.avgTime;
+        this.resultFeedback.avgMemory = feedBack.avgMemory;
+        this.resultFeedback.submitedNum = feedBack.submitedNum;
+        this.chartData = feedBack.chartData;
+        this.compileSuccess = 1;
+      }
+    },
+    toSubmitQueue() {
+      this.$router.push({
+        path: "/experiment/submited",
+        query: {
+          id: this.id,
+        },
+      });
     },
     onResetCode() {
       this.code = "";
@@ -176,8 +278,8 @@ export default {
     let langs = [];
     langs = res.data.checkList;
     langs.map((item) => {
-      let x = {name: "", value: ""}
-      switch(item) {
+      let x = { name: "", value: "" };
+      switch (item) {
         case "C":
           x.name = "C";
           x.value = "c";
@@ -199,7 +301,7 @@ export default {
           this.accessLang.push(x);
           break;
       }
-    })
+    });
   },
 };
 </script>
@@ -242,5 +344,14 @@ export default {
   padding: 10px;
   border-bottom: 2px dotted #dcdfe6;
   color: #214066;
+}
+
+.reason {
+  padding: 20px 0;
+}
+
+.reason > div {
+  color: #aaa;
+  word-break: break-all;
 }
 </style>
