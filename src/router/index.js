@@ -151,7 +151,13 @@ export const asyncRoutes = [
         name: 'CreateCourse',
         component: () => import(/* webpackChunkName: "CreateCourse" */ '../views/teacher/CreateCourse.vue'),
         meta: { roles: ['teacher'], title: 'CreateCourse', icon: 'el-icon-circle-plus-outline' }
-      }
+      },
+      {
+        path: 'homework',
+        hidden: true,
+        component: () => import(/* webpackChunkName: "Homework" */ '../views/teacher/Homework.vue'),
+        meta: { roles: ['teacher'] }
+      },
     ]
   },
   {

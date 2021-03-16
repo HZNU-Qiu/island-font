@@ -5,6 +5,9 @@
         <div class="header-left">
           <p>{{details.name}}</p>
         </div>
+        <div class="header-right">
+          <el-button @click="goBack" icon="el-icon-arrow-left" plain>返回</el-button>
+        </div>
       </div>
       <div class="main">
         <el-row :gutter="20">
@@ -34,7 +37,7 @@
           </el-col>
           <!--  -->
           <el-col :span="7">
-            <el-card shadow="hover">
+            <el-card style="margin-top: 20px" shadow="hover">
               <div class="cardHeader">
                 <i class="el-icon-info"></i>
                 <span>任课教师</span>
@@ -181,6 +184,11 @@ export default {
         }
       });
     },
+    goBack() {
+      this.$router.push({
+        path: "/courseManage/list"
+      })
+    }
   },
   async created() {
     let id = this.$route.query.id;
@@ -223,6 +231,13 @@ export default {
   font-size: 24px;
   font-weight: 500;
   color: #3465a2;
+}
+
+.header-right {
+  float: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .main {

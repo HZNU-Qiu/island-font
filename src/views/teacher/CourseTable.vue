@@ -32,7 +32,7 @@
                 <el-form label-position="top" inline class="table-expand">
                   <el-form-item label="课程描述:">
                     <div v-if="!props.row.editFlag" class="table-edit">
-                      <pre>{{ props.row.description }}</pre>
+                      <div>{{ props.row.description }}</div>
                     </div>
                     <div v-else class="table-edit">
                       <el-input
@@ -45,7 +45,7 @@
                   </el-form-item>
                   <el-form-item label="课程须知:">
                     <div v-if="!props.row.editFlag" class="table-edit">
-                      <pre>{{ props.row.notice }}</pre>
+                      <div>{{ props.row.notice }}</div>
                     </div>
                     <div v-else class="table-edit">
                       <el-input
@@ -58,7 +58,7 @@
                   </el-form-item>
                   <el-form-item label="课程目标:">
                     <div v-if="!props.row.editFlag" class="table-edit">
-                      <pre>{{ props.row.objectives }}</pre>
+                      <div>{{ props.row.objectives }}</div>
                     </div>
                     <div v-else class="table-edit">
                       <el-input
@@ -403,5 +403,10 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+}
+
+.table-edit > div {
+  word-break: break-all;
+  white-space: pre-wrap;
 }
 </style>

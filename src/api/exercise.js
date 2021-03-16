@@ -42,3 +42,14 @@ export function getDetail(id) {
     method: 'get'
   })
 }
+
+/**
+ * 根据难度题型筛选题目
+ */
+export function filterExercise(data) {
+  return request({
+    url: `/exercise/filterExercise`,
+    method: 'post',
+    data
+  })
+}

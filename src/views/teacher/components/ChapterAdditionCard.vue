@@ -32,7 +32,7 @@
             content="添加作业"
             placement="top"
           >
-            <i class="el-icon-document-add" @click.stop="changeCourseName(sample)"></i>
+            <i class="el-icon-document-add" @click.stop="setHomework(sample.id, sample.name)"></i>
           </el-tooltip>
 
           <i class="el-icon-close"></i>
@@ -184,6 +184,15 @@ export default {
         },
       });
     },
+    setHomework(id, title) {
+      this.$router.push({
+        path: "/courseManage/homework",
+        query: {
+          id: id,
+          title: title
+        }
+      })
+    }
   },
 };
 </script>
