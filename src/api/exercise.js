@@ -53,3 +53,14 @@ export function filterExercise(data) {
     data
   })
 }
+
+/**
+ * 添加试题时筛选题目
+ */
+export function getExercisesForPaper(data) {
+  return request({
+    url: '/exercise/getExercisesForPaper',
+    method: 'post',
+    data
+  })
+}

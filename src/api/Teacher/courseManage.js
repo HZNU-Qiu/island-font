@@ -29,3 +29,10 @@ export function getDetail(id) {
     method: 'get'
   })
 }
+
+export function getCourseTree() {
+  return request({
+    url: `/courseManage/getCourseTree`,
+    method: 'get'
+  })
+}

@@ -262,6 +262,32 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/Exam',
+    name: '课程考核',
+    component: Layout,
+    redirect: '/Exam/paperManage',
+    meta: { roles: ['teacher', 'student'], title: '考核', icon: 'el-icon-alarm-clock' },
+    children: [
+      {
+        path: 'paperManage',
+        name: '试卷管理',
+        component: () => import(/* webpackChunkName: "PaperManage" */ '../views/teacher/PaperManage.vue'),
+        meta: { roles: ['teacher'], title: '试卷库', icon: 'el-icon-receiving' }
+      },
+      {
+        path: 'examManage',
+        name: '考试管理',
+        component: () => import(/* webpackChunkName: "ExamManage" */ '../views/teacher/ExamManage.vue'),
+        meta: { roles: ['teacher'], title: '考试管理', icon: 'el-icon-files' }
+      },
+      {
+        path: 'addExercises',
+        hidden: true,
+        component: () => import(/* webpackChunkName: "addExercises" */ '../views/teacher/PaperExercises.vue'),
+      },
+    ]
+  },
 
 ]
 
