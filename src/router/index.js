@@ -18,6 +18,10 @@ export const constantRoutes = [
   {
     path: '/completeInfo',
     component: () => import(/* webpackChunkName: "InfoComplete" */ '../views/InfoComplete/index.vue')
+  },
+  {
+    path: '/doExam',
+    component: () => import(/* webpackChunkName: "DoExam" */ '../views/student/Exam.vue')
   }
 ]
 
@@ -43,24 +47,6 @@ export const asyncRoutes = [
       },
     ]
   },
-  // {
-  //   path: '/student',
-  //   component: Layout,
-  //   redirect: '/student/home',
-  //   name: 'student',
-  //   meta: {
-  //     title: '学生',
-  //     roles: ['student']
-  //   },
-  //   children: [
-  //     {
-  //       path: 'home',
-  //       component: () => import('@/views/system/Dashboard'),
-  //       name: 'systemDashboard',
-  //       meta: { roles: ['system'], title: '系统仪表盘' }
-  //     },
-  //   ]
-  // },
   {
     path: '/home',
     component: Layout,
@@ -76,6 +62,37 @@ export const asyncRoutes = [
         name: 'homepage',
         meta: { roles: ['student', 'teacher', 'system'], title: 'Home', icon: 'el-icon-house' }
       }
+    ]
+  },
+  {
+    path: '/student',
+    component: Layout,
+    redirect: '/student/course',
+    name: '课程中心',
+    meta: {
+      title: '课程中心',
+      roles: ['student'],
+      icon: 'el-icon-s-grid'
+    },
+    children: [
+      {
+        path: 'course',
+        component: () => import('@/views/student/CourseLabrary'),
+        name: '旧岛课程',
+        meta: { roles: ['student'], title: '旧岛课程', icon: 'el-icon-s-management' }
+      },
+      {
+        path: 'courseCatalog',
+        component: () => import('@/views/student/CourseCatalog.vue'),
+        hidden: true,
+        meta: { roles: ['student'], title: '课程目录' }
+      },
+      {
+        path: 'learning',
+        component: () => import('@/views/student/Learning.vue'),
+        hidden: true,
+        meta: { roles: ['student'] }
+      },
     ]
   },
   {
@@ -189,7 +206,7 @@ export const asyncRoutes = [
         path: 'list',
         name: 'ExperimentManage',
         component: () => import(/* webpackChunkName: "ExperimentManage"*/ '../views/teacher/ExperimentList.vue'),
-        meta: { roles: ['teacher', 'student'], title: '题库管理', icon: 'el-icon-s-order' }
+        meta: { roles: ['teacher'], title: '题库管理', icon: 'el-icon-s-order' }
       },
       {
         path: 'all',
@@ -286,6 +303,18 @@ export const asyncRoutes = [
         hidden: true,
         component: () => import(/* webpackChunkName: "addExercises" */ '../views/teacher/PaperExercises.vue'),
       },
+      {
+        path: 'myExams',
+        component: () => import('@/views/student/ExamList.vue'),
+        name: '考核',
+        meta: { roles: ['student'], title: '考核', icon: 'el-icon-trophy' }
+      },
+      {
+        path: 'myGrades',
+        component: () => import('@/views/student/ExamGrades.vue'),
+        name: '我的成绩',
+        meta: { roles: ['student'], title: '成绩', icon: 'el-icon-data-line' }
+      }
     ]
   },
 

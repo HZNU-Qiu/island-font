@@ -189,7 +189,11 @@ export default {
       data.result = this.filterResult;
       let res = await queryQueue(data);
       this.tableData = res.data;
-      this.total = this.tableData[0].total;
+      if (res.data.length === 0) {
+        this.total = 0;
+      } else {
+        this.total = this.tableData[0].total;
+      }
     },
   },
   methods: {
@@ -203,7 +207,11 @@ export default {
       data.result = this.filterResult;
       let res = await queryQueue(data);
       this.tableData = res.data;
-      this.total = this.tableData[0].total;
+      if (res.data.length === 0) {
+        this.total = 0;
+      } else {
+        this.total = this.tableData[0].total;
+      }
     },
     async handlePageChanged(val) {
       this.total = 0;
@@ -216,16 +224,20 @@ export default {
       data.result = this.filterResult;
       let res = await queryQueue(data);
       this.tableData = res.data;
-      this.total = this.tableData[0].total;
+      if (res.data.length === 0) {
+        this.total = 0;
+      } else {
+        this.total = this.tableData[0].total;
+      }
     },
     returnToCoding() {
-    this.$router.push({
-      path: "/experiment/coding",
-      query: {
-        id: this.id,
-      },
-    });
-  },
+      this.$router.push({
+        path: "/experiment/coding",
+        query: {
+          id: this.id,
+        },
+      });
+    },
   },
   async created() {
     this.id = this.$route.query.id;
@@ -236,7 +248,11 @@ export default {
     data.result = this.filterResult;
     let res = await queryQueue(data);
     this.tableData = res.data;
-    this.total = this.tableData[0].total;
+    if (res.data.length === 0) {
+      this.total = 0;
+    } else {
+      this.total = this.tableData[0].total;
+    }
   },
 };
 </script>

@@ -48,7 +48,7 @@
             v-for="(sample, index) in exercises"
             :key="index"
             :data="sample"
-            :isMine="options.filter"
+            :isMine="parseInt(options.filter)"
           ></ExerciseCard>
         </div>
         <div class="pageBox">

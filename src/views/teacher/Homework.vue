@@ -20,7 +20,12 @@
                 <p style="color: #3465a2; font-size: 26px; margin-left: 10px">
                   题目一览
                 </p>
-                <el-button @click="saveHomework" plain icon="el-icon-check" type="success" style="height: 40px"
+                <el-button
+                  @click="saveHomework"
+                  plain
+                  icon="el-icon-check"
+                  type="success"
+                  style="height: 40px"
                   >保存并发布</el-button
                 >
               </div>
@@ -167,10 +172,7 @@
                     </div>
                   </div>
                   <p style="color: #607d8b" class="answer">
-                    {{
-                      "正确答案: " +
-                      String.fromCharCode(parseInt(sample.answer) + 64)
-                    }}
+                    {{ "正确答案: " + sample.answer }}
                   </p>
                   <p style="color: #607d8b" class="hint">
                     {{ "提示: " + (sample.hint ? sample.hint : "无") }}
@@ -250,20 +252,20 @@ export default {
     },
     // 保存发布作业
     async saveHomework() {
-      let data = []
+      let data = [];
       let chapterId = this.id;
       this.homework.map((item) => {
-        let x = {}
+        let x = {};
         x.exerciseId = item.id;
         x.chapterId = this.id;
         data.push(x);
-      })
+      });
       try {
-        await saveHomework({data, chapterId});
-        this.$message.success("保存成功")
+        await saveHomework({ data, chapterId });
+        this.$message.success("保存成功");
       } catch (error) {
-        this.$message.error("服务异常")
-        console.log(error)
+        this.$message.error("服务异常");
+        console.log(error);
       }
     },
     async handleFilter() {
@@ -278,6 +280,17 @@ export default {
         this.total = res.data[0].total;
         this.exercises.map((item) => {
           item.options = item.options.split(";");
+          if (item.type === 2) {
+            let arr = [];
+            arr = item.answer.split(";");
+            let str = "";
+            arr.map((x) => {
+              str += String.fromCharCode(parseInt(x) + 64);
+            });
+            item.answer = str;
+          } else {
+            item.answer = String.fromCharCode(parseInt(item.answer) + 64);
+          }
         });
       } catch (error) {}
     },
@@ -307,6 +320,17 @@ export default {
       this.exercises = res[0].data.rows;
       this.exercises.map((item) => {
         item.options = item.options.split(";");
+        if (item.type === 2) {
+          let arr = [];
+          arr = item.answer.split(";");
+          let str = "";
+          arr.map((x) => {
+            str += String.fromCharCode(parseInt(x) + 64);
+          });
+          item.answer = str;
+        } else {
+          item.answer = String.fromCharCode(parseInt(item.answer) + 64);
+        }
       });
       this.total = res[0].data.count;
       this.homework = res[1].data;

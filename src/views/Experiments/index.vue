@@ -40,11 +40,6 @@
                   style="color: #67c23a"
                   class="el-icon-check"
                 ></i>
-                <i
-                  v-else-if="props.row.result !== -2"
-                  style="color: #f56c6c"
-                  class="el-icon-close"
-                ></i>
               </template>
             </el-table-column>
             <el-table-column prop="displayId" label="实验序号" width="100">

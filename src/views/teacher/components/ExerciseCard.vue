@@ -20,7 +20,13 @@
       <p>{{ "创建者: " + data.userName }}</p>
       <div v-show="isMine !== 1" class="optionsBtn">
         <el-button v-show="isMine === 3" type="danger" plain>删除</el-button>
-        <el-button v-show="isMine !== 1" type="primary" @click="handleEdit" plain>编辑</el-button>
+        <el-button
+          v-show="isMine !== 1"
+          type="primary"
+          @click="handleEdit"
+          plain
+          >编辑</el-button
+        >
       </div>
     </div>
   </div>
@@ -35,6 +41,15 @@ export default {
   },
   computed: {
     rightAnswer: function () {
+      if (this.data.answer.length > 1) {
+        let arr = [];
+        arr = this.data.answer.split(";");
+        let str = ""
+        arr.map((x) => {
+          str += String.fromCharCode(parseInt(x) + 64);
+        });
+        return str;
+      }
       return String.fromCharCode(parseInt(this.data.answer) + 64);
     },
     hint: function () {
