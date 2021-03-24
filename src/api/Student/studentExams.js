@@ -9,3 +9,13 @@ export function listStudentExams() {
     method: 'get'
   })
 }
+
+/**
+ * 获取考试的起始时间以及剩余时间
+ */
+export function getExamDuration(id) {
+  return request({
+    url: `/exam/getExamDuration/${id}`,
+    method: 'get'
+  })
+}

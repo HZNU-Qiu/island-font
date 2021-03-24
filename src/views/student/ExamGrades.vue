@@ -9,7 +9,14 @@
       <!--  -->
       <div class="main">
         <el-row :gutter="20">
-          <el-col :span="18">
+          <el-col
+            :span="18"
+            style="
+              display: flex;
+              flex-direction: row;
+              flex-wrap: wrap;
+            "
+          >
             <div v-for="(sample, index) in grades" :key="index" class="grade">
               <div class="left">
                 <div class="point">

@@ -31,6 +31,16 @@ export function register(data) {
 }
 
 /**
+ * 首页加载信息接口
+ */
+export function getHomePageInfo() {
+    return request({
+        url: '/user/getHomePageInfo',
+        method: 'get'
+    })
+}
+
+/**
  * 通用上传图片并在线预览方法
  */
 export function uploadAndPreview(data) {

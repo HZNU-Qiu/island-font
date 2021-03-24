@@ -136,8 +136,6 @@ export default {
 
 <style>
 * {
-  margin: 0;
-  padding: 0;
   font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
 }
 

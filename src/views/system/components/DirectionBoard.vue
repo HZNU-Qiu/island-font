@@ -43,8 +43,6 @@ export default {
 
 <style scoped>
 * {
-  padding: 0;
-  margin: 0;
   font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
 }
 

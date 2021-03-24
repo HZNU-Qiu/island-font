@@ -3,6 +3,7 @@
     <div class="panel">
       <el-row :gutter="20">
         <el-col class="header" :span="18">
+          <span>{{ startTime }} -- {{ endTime }}</span>
           <el-progress
             :text-inside="true"
             :stroke-width="26"
@@ -11,7 +12,11 @@
         </el-col>
         <el-col :span="3"><br /></el-col>
         <el-col class="header" :span="3">
-          <el-button @click="handleSubmit" type="success" icon="el-icon-check" plain
+          <el-button
+            @click="handleSubmit"
+            type="success"
+            icon="el-icon-check"
+            plain
             >完成提交</el-button
           >
         </el-col>
@@ -46,27 +51,32 @@
                 </div>
               </div>
               <!-- 多选 -->
-              <!-- <div v-if="exercise.type === 2" class="options">
-                <div class="item" v-for="(x, i) in exercise.options" :key="i">
+              <div v-if="problems[current].type === 2" class="options">
+                <div
+                  class="item"
+                  v-for="(x, i) in problems[current].options"
+                  :key="i"
+                >
                   <span
                     @click="handleMultiSelect(i)"
                     style="border-radius: 8px"
                     :class="[
                       'chooser',
-                      { isActive: exercise.multiArray[i] && !showResult },
+                      { isActive: problems[current].multiArray[i] },
                     ]"
                     >{{ String.fromCharCode(i + 65) }}</span
                   >
                   {{ x }}
                 </div>
               </div>
-              <div v-if="exercise.type === 3" class="options">
+              <!--  -->
+              <div v-if="problems[current].type === 3" class="options">
                 <div class="item">
                   <span
                     @click="handleSelect(1)"
                     :class="[
                       'chooser',
-                      { isActive: exercise.current === 1 && !showResult },
+                      { isActive: problems[current].studentAnswer === 1 },
                     ]"
                     >T</span
                   >
@@ -76,12 +86,12 @@
                     @click="handleSelect(2)"
                     :class="[
                       'chooser',
-                      { isActive: exercise.current === 2 && !showResult },
+                      { isActive: problems[current].studentAnswer === 2 },
                     ]"
                     >F</span
                   >
                 </div>
-              </div> -->
+              </div>
               <el-button
                 @click="handleSave"
                 style="margin-top: 60px"
@@ -119,6 +129,7 @@
 <script>
 import { getPaperExercises } from "@/api/paper.js";
 import { saveRecord, judgeExam } from "@/api/Student/examRecord.js";
+import { getExamDuration } from "@/api/Student/studentExams.js";
 export default {
   data() {
     return {
@@ -137,11 +148,29 @@ export default {
     problemPoint: function () {
       return this.problems[this.current].point;
     },
+    // leftTimestamp: function() {
+    //   this.getTimePercent();
+    // }
   },
   methods: {
     handleSelect(x) {
       let obj = this.problems[this.current];
       obj.studentAnswer = x;
+      this.$set(this.problems, this.current, obj);
+    },
+    handleMultiSelect(x) {
+      let obj = this.problems[this.current];
+      obj.multiArray[x] = obj.multiArray[x] === 0 ? 1 : 0;
+      let str = "",
+        arr = [];
+      obj.multiArray.map((x, i) => {
+        if (x !== 0) {
+          arr.push(i + 1);
+        }
+      });
+      str = arr.join(";");
+      obj.studentAnswer = str;
+      console.log(obj);
       this.$set(this.problems, this.current, obj);
     },
     async handleSave() {
@@ -155,35 +184,49 @@ export default {
         await saveRecord(saveData);
         this.$message.success("答案已保存,请放心继续作答");
       } catch (error) {
-        this.$message.error("保存失败")
+        this.$message.error("保存失败");
       }
     },
     async handleSubmit() {
-      let flag = false
-      flag = this.hasSaved.some(item => {
+      let flag = false;
+      flag = this.hasSaved.some((item) => {
         if (parseInt(item) !== 1) {
-          return true
+          return true;
         }
-      })
+      });
       if (flag) {
-        this.$message.error("还有题目遗漏,请仔细检查")
+        this.$message.error("还有题目遗漏,请仔细检查");
       } else {
-        let data = {}
+        let data = {};
         data.examId = this.examId;
         data.paperId = this.paperId;
         await judgeExam(data);
         this.$router.push({
-          path: '/Exam/myGrades'
-        })
+          path: "/Exam/myGrades",
+        });
       }
-    }
+    },
+    getTimePercent() {
+      let startTimestamp = new Date(this.startTime);
+      let endTimestamp = new Date(this.endTime);
+      let totalDuration = endTimestamp - startTimestamp;
+      let currentTimestamp = new Date().getTime();
+      let leftTimestamp = currentTimestamp - startTimestamp;
+      let timePercent = ((leftTimestamp / totalDuration) * 100).toFixed(1);
+      if (timePercent <= 100) {
+        this.timePercent = parseFloat(timePercent);
+        setTimeout(this.getTimePercent, 1000);
+      }
+    },
   },
   async created() {
     try {
       this.examId = this.$route.query.examId;
       this.paperId = this.$route.query.paperId;
-      let res = await Promise.all([getPaperExercises(this.paperId)]);
-      console.log(res[0].data);
+      let res = await Promise.all([
+        getPaperExercises(this.paperId),
+        getExamDuration(this.examId),
+      ]);
       this.problems = res[0].data;
       this.total = this.problems.length;
       for (let i = 0; i < this.total; i++) {
@@ -191,7 +234,17 @@ export default {
       }
       this.problems.map((item) => {
         item.options = item.options.split(";");
+        if (item.type === 2) {
+          item.multiArray = [];
+          for (let i = 0; i < item.options.length; i++) {
+            item.multiArray[i] = 0;
+          }
+        }
       });
+      this.startTime = res[1].data.startTime;
+      this.endTime = res[1].data.endTime;
+      this.timePercent = parseFloat(res[1].data.timePercent);
+      this.getTimePercent();
     } catch (error) {}
   },
 };

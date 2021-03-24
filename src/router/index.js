@@ -5,6 +5,13 @@ Vue.use(VueRouter)
 
 import Layout from '@/layout'
 
+
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+  return originalPush.call(this, location).catch(err => err)
+}
+
 /**
  * constantRoutes
  * a base page that does not have permission requirements
@@ -58,10 +65,10 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/HomePage/index'),
-        name: 'homepage',
-        meta: { roles: ['student', 'teacher', 'system'], title: 'Home', icon: 'el-icon-house' }
-      }
+        component: () => import('@/views/HomePage.vue'),
+        name: 'Homepage',
+        meta: { roles: ['student', 'teacher', 'system'], title: 'Homepage', icon: 'el-icon-house' }
+      },
     ]
   },
   {

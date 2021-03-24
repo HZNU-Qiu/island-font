@@ -23,10 +23,17 @@
             placeholder="密码"
           />
         </el-form-item>
-        <el-button id="loginBtn" @click="handleLogin('loginData')"
+        <el-button
+          class="loginBtn"
+          type="success"
+          @click="handleLogin('loginData')"
           >登录</el-button
         >
-        <el-button id="registerBtn" type="button" @click="islogin = !islogin">
+        <el-button
+          class="registerBtn"
+          type="primary"
+          @click="islogin = !islogin"
+        >
           注册
         </el-button>
       </el-form>
@@ -67,10 +74,16 @@
             placeholder="请输入邮箱"
           />
         </el-form-item>
-        <el-button id="completeBtn" @click="handleRegister('registerData')">
+        <el-button
+          class="completeBtn"
+          type="success"
+          @click="handleRegister('registerData')"
+        >
           完成注册
         </el-button>
-        <el-button id="cancelBtn" @click="islogin = !islogin"> 取消 </el-button>
+        <el-button class="cancelBtn" type="primary" @click="islogin = !islogin">
+          取消
+        </el-button>
       </el-form>
     </transition>
   </div>
@@ -198,8 +211,6 @@ export default {
 
 <style>
 * {
-  margin: 0;
-  padding: 0;
   font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
 }
 
@@ -261,8 +272,7 @@ export default {
   margin-left: 0;
 }
 
-.login-form input,
-.login-form button {
+.login-form input {
   margin: 6px 0;
   width: 100%;
   height: 36px;
@@ -277,8 +287,9 @@ export default {
   color: #3d5245;
 }
 
-#loginBtn {
-  margin-top: 24px;
+.loginBtn {
+  margin-top: 4px;
+  padding-bottom: 25px;
   background-color: rgba(57, 88, 69, 0.4);
   color: #fff;
   position: relative;
@@ -287,16 +298,16 @@ export default {
   transition: 0.4s;
 }
 
-#loginBtn:hover {
+.loginBtn:hover {
   background-color: rgba(10, 71, 34, 0.733);
 }
 
-#loginBtn:focus {
+.loginBtn:focus {
   outline: 0;
 }
 
-#loginBtn::before,
-#loginBtn::after {
+.loginBtn::before,
+.loginBtn::after {
   content: "";
   display: block;
   width: 80px;
@@ -312,27 +323,28 @@ export default {
   transform: translateX(-100px);
 }
 
-#loginBtn::after {
+.loginBtn::after {
   width: 40px;
   background: rgb(254, 255, 254);
   left: 60px;
   opacity: 0;
 }
 
-#loginBtn:hover::before {
+.loginBtn:hover::before {
   transition: 1s;
   transform: translateX(320deg);
   opacity: 0.7;
 }
 
-#loginBtn:hover::after {
+.loginBtn:hover::after {
   transition: 1s;
   transform: translateX(320px);
   opacity: 1;
 }
 
-#registerBtn {
-  margin-top: 5px;
+.registerBtn {
+  margin-top: 4px;
+  padding-bottom: 25px;
   background-color: rgba(44, 143, 236, 0.4);
   color: #fff;
   position: relative;
@@ -341,16 +353,16 @@ export default {
   transition: 0.4s;
 }
 
-#registerBtn:hover {
+.registerBtn:hover {
   background-color: rgba(14, 124, 214, 0.733);
 }
 
-#registerBtn:focus {
+.registerBtn:focus {
   outline: 0;
 }
 
-#registerBtn::before,
-#registerBtn::after {
+.registerBtn::before,
+.registerBtn::after {
   content: "";
   display: block;
   width: 80px;
@@ -366,20 +378,20 @@ export default {
   transform: translateX(-100px);
 }
 
-#registerBtn::after {
+.registerBtn::after {
   width: 40px;
   background: rgb(254, 255, 254);
   left: 60px;
   opacity: 0;
 }
 
-#registerBtn:hover::before {
+.registerBtn:hover::before {
   transition: 1s;
   transform: translateX(320deg);
   opacity: 0.7;
 }
 
-#registerBtn:hover::after {
+.registerBtn:hover::after {
   transition: 1s;
   transform: translateX(320px);
   opacity: 1;
@@ -421,8 +433,7 @@ export default {
   color: #fff;
 }
 
-.register-form input,
-.register-form button {
+.register-form input {
   margin: 6px 0;
   height: 36px;
   border: none;
@@ -436,8 +447,9 @@ export default {
   color: #3d5245;
 }
 
-#completeBtn {
-  margin-top: 24px;
+.completeBtn {
+  margin-top: 4px;
+  padding-bottom: 25px;
   background-color: rgba(57, 88, 69, 0.4);
   color: #fff;
   position: relative;
@@ -446,16 +458,16 @@ export default {
   transition: 0.4s;
 }
 
-#completeBtn:hover {
+.completeBtn:hover {
   background-color: rgba(10, 71, 34, 0.733);
 }
 
-#completeBtn:focus {
+.completeBtn:focus {
   outline: 0;
 }
 
-#completeBtn::before,
-#completeBtn::after {
+.completeBtn::before,
+.completeBtn::after {
   content: "";
   display: block;
   width: 80px;
@@ -471,27 +483,28 @@ export default {
   transform: translateX(-100px);
 }
 
-#completeBtn::after {
+.completeBtn::after {
   width: 40px;
   background: rgb(254, 255, 254);
   left: 60px;
   opacity: 0;
 }
 
-#completeBtn:hover::before {
+.completeBtn:hover::before {
   transition: 1s;
   transform: translateX(320deg);
   opacity: 0.7;
 }
 
-#completeBtn:hover::after {
+.completeBtn:hover::after {
   transition: 1s;
   transform: translateX(320px);
   opacity: 1;
 }
 
-#cancelBtn {
-  margin-top: 5px;
+.cancelBtn {
+  margin-top: 4px;
+  padding-bottom: 25px;
   background-color: rgba(44, 143, 236, 0.4);
   color: #fff;
   position: relative;
@@ -500,16 +513,16 @@ export default {
   transition: 0.4s;
 }
 
-#cancelBtn:hover {
+.cancelBtn:hover {
   background-color: rgba(14, 124, 214, 0.733);
 }
 
-#cancelBtn:focus {
+.cancelBtn:focus {
   outline: 0;
 }
 
-#cancelBtn::before,
-#cancelBtn::after {
+.cancelBtn::before,
+.cancelBtn::after {
   content: "";
   display: block;
   width: 80px;
@@ -525,20 +538,20 @@ export default {
   transform: translateX(-100px);
 }
 
-#cancelBtn::after {
+.cancelBtn::after {
   width: 40px;
   background: rgb(254, 255, 254);
   left: 60px;
   opacity: 0;
 }
 
-#cancelBtn:hover::before {
+.cancelBtn:hover::before {
   transition: 1s;
   transform: translateX(320deg);
   opacity: 0.7;
 }
 
-#cancelBtn:hover::after {
+.cancelBtn:hover::after {
   transition: 1s;
   transform: translateX(320px);
   opacity: 1;

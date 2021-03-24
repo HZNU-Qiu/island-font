@@ -22,7 +22,7 @@ router.beforeEach(async (to, from, next) => {
     } else if (to.path === '/completeInfo') {
       next()
     } else if (to.path === '/') {
-      next({ path: '/home/index' })
+      next({ path: '/home' })
     } else {
       if (store.getters.roles.length === 0) {
         store.dispatch('GetInfo').then(response => { // 拉取用户信息

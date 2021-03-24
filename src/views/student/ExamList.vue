@@ -29,7 +29,7 @@
               <p style="font-size: 12px">结束: {{ sample.endTime }}</p>
             </div>
             <el-button
-              v-show="sample.status === 1"
+              v-show="sample.status === 1 && sample.hasJoined === false"
               style="height: 40px; margin-top: 5px"
               size="mini"
               icon="el-icon-tickets"
