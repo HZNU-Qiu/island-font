@@ -64,3 +64,13 @@ export function cancelUpload(tmp) {
         data: tmp
     })
 }
+
+/**
+ * Ping 判题服务器
+ */
+export function PingJudgeServer() {
+    return request({
+        url: '/experiment/ping',
+        method: 'get'
+    })
+}
