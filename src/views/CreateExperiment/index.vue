@@ -260,7 +260,6 @@ export default {
   methods: {
     unlock() {
       if (this.needToChange === true) {
-        console.log(this.oldSamples);
         this.samples = this.oldSamples;
       }
       this.needToChange = !this.needToChange;
@@ -301,7 +300,6 @@ export default {
             });
           }
         } catch (error) {
-          console.log(error);
           this.$message.error("服务器异常");
         }
       }

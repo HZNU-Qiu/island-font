@@ -186,7 +186,7 @@
               >
                 详情</el-button
               >
-              <el-button size="mini" type="danger" plain>删除</el-button>
+              <el-button style="margin-left: 30px" size="mini" type="danger" plain>删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -336,9 +336,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
 .panel {
   border: 1px solid #edecec;
   border-radius: 6px;

@@ -186,7 +186,6 @@ export default {
         });
       });
     } catch (error) {
-      console.log(error);
       this.$message.error("服务异常");
     }
   },
@@ -194,10 +193,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
-
 .block {
   padding: 10px 20px;
   width: 100%;

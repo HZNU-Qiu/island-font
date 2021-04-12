@@ -22,7 +22,7 @@
             </div>
             <el-divider></el-divider>
             <div class="detailBody">
-              <p>ECS 参数</p>
+              <p>服务器参数</p>
               <div class="dataset">
                 <p class="items">服务器版本: {{ dataSet.judger_version }}</p>
                 <p class="items" style="margin-left: 16px">
@@ -45,7 +45,7 @@
         <el-col :span="16">
           <el-row :gutter="20">
             <el-col :span="8">
-              <HomePageTag :title="'部署服务器数'" :data="2"></HomePageTag>
+              <HomePageTag :title="'部署服务器数'" :data="1"></HomePageTag>
             </el-col>
             <el-col :span="8">
               <HomePageTag :title="'测试仓库容量(GB)'" :data="20"></HomePageTag>
@@ -93,11 +93,13 @@ export default {
     };
   },
   methods: {
-    generateData() {
+    async generateData() {
+      let res = await PingJudgeServer();
+      this.dataSet = res.data.data;
       let newArray = [];
       let newArray2 = [];
       for (let i = 0; i < 12; i++) {
-        let randomValue = Math.floor(Math.random() * 15 + 10);
+        let randomValue = Math.floor(Math.random() * 3.1 + 10);
         let randomValue1 = Math.floor(Math.random() * 5 + 60);
         newArray.push(randomValue);
         newArray2.push(randomValue1);
@@ -133,8 +135,10 @@ export default {
       };
     },
     updateData() {
-      this.generateData();
-      setTimeout(this.updateData, 2000);
+      if (this && !this._isDestroyed) {
+        this.generateData();
+        setTimeout(this.updateData, 5000);
+      }
     },
   },
   async created() {

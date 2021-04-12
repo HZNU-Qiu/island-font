@@ -28,10 +28,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
-
 .course {
   position: relative;
   width: 270px;

@@ -51,10 +51,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
-
 div {
   margin: 10px;
 }

@@ -201,7 +201,6 @@ export default {
       if (this.hasUpload) {
         try {
           // 先清理缓存中的图片
-          console.log(this.tmpImage);
           let data = this.tmpImage;
           await cancelUpload({ data });
           this.$message({

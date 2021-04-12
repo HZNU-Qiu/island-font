@@ -229,7 +229,6 @@ export default {
       this.oldData.majorID = row.major_id
       this.oldData.classID = row.class_id
       this.showModify = true
-      console.log(this.oldData)
     },
     handleCellEdit(row) {
       row.editFlag = true;
@@ -267,9 +266,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
 .panel {
   border: 1px solid #edecec;
   border-radius: 6px;

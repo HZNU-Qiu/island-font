@@ -20,10 +20,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
-
 .card {
   border-radius: 8px;
   padding: 25px;

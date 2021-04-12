@@ -307,10 +307,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
-
 .home {
   padding: 20px;
 }

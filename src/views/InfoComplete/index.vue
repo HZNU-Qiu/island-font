@@ -135,10 +135,6 @@ export default {
 </script>
 
 <style>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
-
 .container {
   width: 100vw;
   height: 100vh;

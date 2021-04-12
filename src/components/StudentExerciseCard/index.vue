@@ -180,10 +180,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
-
 .exercise {
   padding: 20px;
   margin: 20px 5px;

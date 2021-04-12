@@ -81,9 +81,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
 .tag {
   position: relative;
   bottom: 35px;

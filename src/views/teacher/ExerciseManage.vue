@@ -148,7 +148,6 @@ export default {
   async created() {
     try {
       let filter = this.$route.query.filter;
-      console.log(filter)
       if (filter !== null && filter !== "" && filter !== undefined) {
         this.options.filter = filter;
         this.isAll = filter;
@@ -164,9 +163,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
 .panel {
   border: 1px solid #edecec;
   border-radius: 6px;

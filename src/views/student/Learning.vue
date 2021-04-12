@@ -193,7 +193,6 @@ export default {
           }
         });
       });
-      console.log(homeworks);
       this.homeworks = homeworks;
     } else {
       this.homeworks = homeworks;
@@ -203,9 +202,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
 .panel {
   border: 1px solid #edecec;
   border-radius: 6px;
@@ -231,8 +227,6 @@ export default {
 
 .main {
   background: #fdfdfd;
-  display: flex;
-  justify-content: center;
 }
 
 .content {

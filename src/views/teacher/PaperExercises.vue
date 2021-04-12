@@ -269,7 +269,7 @@ export default {
       }
     },
     pDiff: function () {
-      switch (this.paperType) {
+      switch (this.paperDifficulty) {
         case 1:
           return "简单";
         case 2:
@@ -381,7 +381,9 @@ export default {
       this.exercises.map((item) => {
         item.options = item.options.split(";");
       });
-      this.total = res[0].data[0].total;
+      if (this.exercises.length !== 0) {
+        this.total = res[0].data[0].total;
+      }
       this.papersExercises = res[1].data;
       let pointSum = 0;
       this.papersExercises.map((item) => {
@@ -390,6 +392,7 @@ export default {
       });
       this.currentPoints = pointSum;
     } catch (error) {
+      console.log(error)
       this.$message.error("服务异常");
     }
   },
@@ -397,11 +400,8 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
-
 .panel {
+  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
   border: 1px solid #edecec;
   border-radius: 6px;
   margin: 5px;

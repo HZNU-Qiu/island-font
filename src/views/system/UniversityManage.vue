@@ -457,9 +457,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
 /*深拷贝*/
 .el-tree >>> .custom-tree-node {
   flex: 1;

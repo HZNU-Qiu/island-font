@@ -48,10 +48,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
-
 .infoCard {
   background-color: #ffffff;
   border-radius: 8px;

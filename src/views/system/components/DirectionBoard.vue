@@ -2,8 +2,8 @@
   <div class="box" v-bind:style="{ background: boxColor[this.id % 5] }">
     <h1>{{ name }}</h1>
     <p>{{ description }}</p>
-    <div class="tooltip" @click="modify">
-      <i class="el-icon-edit-outline"></i>
+    <div class="tooltip">
+      <i class="el-icon-edit-outline" @click.prevent.stop="modify"></i>
       <span class="tooltiptext">点我编辑</span>
     </div>
   </div>
@@ -42,10 +42,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
-
 .box {
   width: 300px;
   height: 200px;
@@ -91,7 +87,7 @@ export default {
 .tooltip {
   position: relative;
   left: 130px;
-  bottom: 100px;
+  bottom: 170px;
 }
 
 .el-icon-edit-outline {

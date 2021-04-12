@@ -41,7 +41,7 @@ export const asyncRoutes = [
     path: '/system',
     component: Layout,
     meta: {
-      title: 'system',
+      title: '管理员',
       icon: 'el-icon-s-platform',
       roles: ['system']
     },
@@ -50,7 +50,7 @@ export const asyncRoutes = [
         path: 'dashboard',
         component: () => import('@/views/system/Dashboard'),
         name: 'SystemDashboard',
-        meta: { roles: ['system'], title: 'DashBoard', icon: 'el-icon-stopwatch' }
+        meta: { roles: ['system'], title: '服务监控', icon: 'el-icon-stopwatch' }
       },
     ]
   },
@@ -58,7 +58,7 @@ export const asyncRoutes = [
     path: '/home',
     component: Layout,
     redirect: '/home/index',
-    name: 'home',
+    name: '主页',
     meta: {
       roles: ['student', 'teacher', 'system'],
     },
@@ -66,8 +66,8 @@ export const asyncRoutes = [
       {
         path: 'index',
         component: () => import('@/views/HomePage.vue'),
-        name: 'Homepage',
-        meta: { roles: ['student', 'teacher', 'system'], title: 'Homepage', icon: 'el-icon-house' }
+        name: '旧岛LMS',
+        meta: { roles: ['student', 'teacher', 'system'], title: '旧岛LMS', icon: 'el-icon-house' }
       },
     ]
   },
@@ -106,7 +106,7 @@ export const asyncRoutes = [
     path: '/universityManage',
     component: Layout,
     redirect: '/universityManage/index',
-    name: 'UniversityManage',
+    name: '院校管理',
     meta: {
       roles: ['system'],
     },
@@ -115,7 +115,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/system/UniversityManage'),
         name: 'Manage',
-        meta: { roles: ['system'], title: 'UniversityManage', icon: 'el-icon-office-building' }
+        meta: { roles: ['system'], title: '院校管理', icon: 'el-icon-office-building' }
       }
     ]
   },
@@ -123,20 +123,20 @@ export const asyncRoutes = [
     path: '/userManage',
     component: Layout,
     redirect: '/userManage/studentManage',
-    name: 'UserManage',
-    meta: { roles: ['system'], title: 'UserManage', icon: 'el-icon-s-custom' },
+    name: '用户管理',
+    meta: { roles: ['system'], title: '用户管理', icon: 'el-icon-s-custom' },
     children: [
       {
         path: 'studentManage',
         component: () => import('@/views/system/StudentManage'),
-        name: 'studentManage',
-        meta: { roles: ['system'], title: 'StudentManage', icon: 'el-icon-user-solid' }
+        name: '学生管理',
+        meta: { roles: ['system'], title: '学生管理', icon: 'el-icon-user-solid' }
       },
       {
         path: 'teacherManage',
         component: () => import('@/views/system/TeacherManage'),
-        name: 'teacherManage',
-        meta: { roles: ['system'], title: 'TeacherManage', icon: 'el-icon-user' }
+        name: '教师管理',
+        meta: { roles: ['system'], title: '教师管理', icon: 'el-icon-user' }
       }
     ]
   },
@@ -144,7 +144,7 @@ export const asyncRoutes = [
     path: '/directions',
     component: Layout,
     redirect: '/directions/index',
-    name: 'CourseManage',
+    name: '课程管理',
     meta: {
       roles: ['system'],
     },
@@ -152,8 +152,8 @@ export const asyncRoutes = [
       {
         path: 'index',
         component: () => import('@/views/system/CourseDirection'),
-        name: 'CourseDirection',
-        meta: { roles: ['system'], title: 'CourseDirection', icon: 'el-icon-collection-tag' }
+        name: '课程方向',
+        meta: { roles: ['system'], title: '课程方向', icon: 'el-icon-collection-tag' }
       }
     ]
   },

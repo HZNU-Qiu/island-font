@@ -170,7 +170,6 @@ export default {
       });
       str = arr.join(";");
       obj.studentAnswer = str;
-      console.log(obj);
       this.$set(this.problems, this.current, obj);
     },
     async handleSave() {
@@ -251,10 +250,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
-
 .panel {
   border: 1px solid #edecec;
   border-radius: 6px;

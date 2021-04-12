@@ -62,9 +62,7 @@ export default {
       });
     },
     async handleSave() {
-      console.log(this.isModify);
       if (!this.isModify) {
-        console.log(this.isModify);
         let formData = {};
         formData.chapter_id = this.chapterId;
         formData.content = this.content;
@@ -96,7 +94,6 @@ export default {
         formData.id = this.id;
         formData.content = this.content;
         formData.flag = 1;
-        console.log(formData);
         try {
           let res = await saveContent(formData);
           this.id = res.data.id;
@@ -133,9 +130,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-}
 .panel {
   border: 1px solid #edecec;
   border-radius: 6px;
