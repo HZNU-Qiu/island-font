@@ -159,22 +159,22 @@ export const asyncRoutes = [
   },
   {
     path: '/courseManage',
-    name: 'CourseManage',
+    name: '课程库',
     component: Layout,
     redirect: '/courseManage/list',
-    meta: { roles: ['teacher'], title: 'CourseManage', icon: 'el-icon-s-grid' },
+    meta: { roles: ['teacher'], title: '课程库', icon: 'el-icon-s-grid' },
     children: [
       {
         path: 'list',
-        name: 'CourseTable',
+        name: '课程列表',
         component: () => import(/* webpackChunkName: "CourseTable" */ '../views/teacher/CourseTable.vue'),
-        meta: { roles: ['teacher'], title: 'CourseTable', icon: 'el-icon-notebook-2' }
+        meta: { roles: ['teacher'], title: '课程列表', icon: 'el-icon-notebook-2' }
       },
       {
         path: 'create',
-        name: 'CreateCourse',
+        name: '创建课程',
         component: () => import(/* webpackChunkName: "CreateCourse" */ '../views/teacher/CreateCourse.vue'),
-        meta: { roles: ['teacher'], title: 'CreateCourse', icon: 'el-icon-circle-plus-outline' }
+        meta: { roles: ['teacher'], title: '创建课程', icon: 'el-icon-circle-plus-outline' }
       },
       {
         path: 'homework',
@@ -186,10 +186,10 @@ export const asyncRoutes = [
   },
   {
     path: '/experiment',
-    name: 'Experiments',
+    name: '实验题库',
     component: Layout,
     redirect: '/experiment/coding',
-    meta: { roles: ['teacher', 'student'], title: 'Experiments', icon: 'el-icon-s-platform' },
+    meta: { roles: ['teacher', 'student'], title: '实验题库', icon: 'el-icon-s-platform' },
     children: [
       {
         path: 'coding',
@@ -225,16 +225,16 @@ export const asyncRoutes = [
   },
   {
     path: '/exerciseManage',
-    name: 'ExerciseManage',
+    name: '理论题库',
     component: Layout,
     redirect: '/exerciseManage/index',
-    meta: { roles: ['teacher'], title: 'ExerciseManage', icon: 'el-icon-s-order' },
+    meta: { roles: ['teacher'], title: '理论题库', icon: 'el-icon-s-order' },
     children: [
       {
         path: 'index',
-        name: 'Exercises',
+        name: '理论题',
         component: () => import(/* webpackChunkName: "ExercisesManage" */ '../views/teacher/ExerciseManage.vue'),
-        meta: { roles: ['teacher'], title: 'Exercises', icon: 'el-icon-s-order' }
+        meta: { roles: ['teacher'], title: '理论题', icon: 'el-icon-s-order' }
       },
       {
         path: 'exerciseEdition',

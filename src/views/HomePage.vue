@@ -69,8 +69,8 @@ export default {
       let newArray = [];
       let newArray2 = [];
       for (let i = 0; i < 15; i++) {
-        let randomValue = Math.floor(Math.random() * 10 + 20);
-        let randomValue1 = Math.floor(Math.random() * 5 + 20);
+        let randomValue = Math.floor(Math.random() * 10 + 5);
+        let randomValue1 = Math.floor(Math.random() * 5 + 1);
         newArray.push(randomValue);
         newArray2.push(randomValue1);
       }

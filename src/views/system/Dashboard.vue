@@ -100,22 +100,22 @@ export default {
       let newArray2 = [];
       for (let i = 0; i < 12; i++) {
         let randomValue = Math.floor(Math.random() * 3.1 + 10);
-        let randomValue1 = Math.floor(Math.random() * 5 + 60);
+        let randomValue1 = Math.floor(Math.random() * 2 + 60);
         newArray.push(randomValue);
         newArray2.push(randomValue1);
       }
       this.chartData = {
         labels: [
-          "-24h",
-          "-22h",
-          "-20h",
-          "-12h",
-          "-6h",
-          "-4h",
-          "-1h",
-          "-30min",
-          "-10min",
           "-1min",
+          "-54s",
+          "-48s",
+          "-42s",
+          "-36s",
+          "-30s",
+          "-24s",
+          "-18s",
+          "-12s",
+          "-6s",
           "0s",
         ],
         datasets: [

@@ -370,6 +370,7 @@ export default {
         });
       });
       let data1 = res[1].data;
+      this.total = data1[0].total;
       this.papers = data1;
     } catch (error) {
       console.log(error);

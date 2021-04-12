@@ -214,6 +214,9 @@ export default {
   font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
 }
 
+body {
+  margin: 0;
+}
 .container1 {
   width: 100vw;
   height: 100vh;
